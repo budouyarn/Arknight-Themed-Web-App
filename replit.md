@@ -114,7 +114,7 @@ Preferred communication style: Simple, everyday language.
 **Visual Design Elements**
 - Terra map background image at full opacity for clear visibility
 - Badge system for faction identification with faction icons
-- Uniform grey color scheme for all faction regions
+- Uniform grey color scheme for all faction regions at full opacity
 - Search and filter UI with real-time updates
 - Top-left corner text displays "PRTS SYNTHESIZE INFORMATION ANALYSIS" with typewriter animation effect and continuous blinking cursor (no background box)
 - Spread-out faction positioning across 16:10 landscape map

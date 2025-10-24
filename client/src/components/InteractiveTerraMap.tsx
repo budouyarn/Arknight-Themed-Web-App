@@ -28,16 +28,16 @@ const factionIcons: Record<Faction, typeof Shield> = {
 };
 
 const factionColors: Record<Faction, string> = {
-  "Rhodes Island": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Lungmen": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Ursus": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Victoria": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Kazimierz": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Laterano": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Siesta": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Bolivar": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Sargon": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
-  "Yan": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Rhodes Island": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Lungmen": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Ursus": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Victoria": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Kazimierz": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Laterano": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Siesta": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Bolivar": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Sargon": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
+  "Yan": "from-slate-500 to-slate-600 border-slate-400 hover:from-slate-500 hover:to-slate-600",
 };
 
 const radarColors: Record<Faction, string> = {
