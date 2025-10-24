@@ -358,4 +358,27 @@
       repeating-linear-gradient(0deg, transparent, transparent 10px, currentColor 10px, currentColor 11px),
       repeating-linear-gradient(90deg, transparent, transparent 10px, currentColor 10px, currentColor 11px);
   }
+
+  @keyframes radar-pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(4);
+      opacity: 0;
+    }
+  }
+
+  .animate-radar-ping {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+  }
 }
