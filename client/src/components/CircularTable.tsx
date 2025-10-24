@@ -47,10 +47,7 @@ export default function CircularTable({ guests, tableName }: CircularTableProps)
             style={{ width: '180px', height: '180px' }}
           >
             <div className="text-center">
-              <div className="font-location text-lg font-bold text-foreground">
-                {tableName}
-              </div>
-              <div className="text-sm text-muted-foreground font-display mt-1">
+              <div className="text-sm text-muted-foreground font-display">
                 {guests.length} {guests.length === 1 ? 'Seat' : 'Seats'}
               </div>
             </div>
