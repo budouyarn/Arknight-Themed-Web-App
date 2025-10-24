@@ -97,7 +97,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* View Tabs - Top Right */}
-      <div className="fixed top-6 right-6 z-40 flex gap-2">
+      <div className="fixed top-2 right-2 z-40 flex gap-2">
         <Button 
           variant={currentView === "map" ? "default" : "outline"}
           onClick={() => setCurrentView("map")}
@@ -130,15 +130,13 @@ export default function Home() {
           </div>
 
           {/* Full Screen Map */}
-          <div className="w-full h-full flex items-center justify-center p-4">
-            <div className="w-full h-full max-w-[95vw] max-h-[95vh]">
-              <InteractiveTerraMap
-                tables={tables}
-                guestCounts={guestCounts}
-                selectedFaction={selectedFaction}
-                onFactionSelect={handleMapFactionSelect}
-              />
-            </div>
+          <div className="w-full h-full">
+            <InteractiveTerraMap
+              tables={tables}
+              guestCounts={guestCounts}
+              selectedFaction={selectedFaction}
+              onFactionSelect={handleMapFactionSelect}
+            />
           </div>
         </div>
       )}
