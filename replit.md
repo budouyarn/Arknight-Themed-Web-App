@@ -112,7 +112,7 @@ Preferred communication style: Simple, everyday language.
 - Responsive grid layouts for table visualization
 
 **Visual Design Elements**
-- Terra map background image integration
+- Terra map background image at full opacity for clear visibility
 - Geometric grid overlays for tech aesthetic
 - Badge system for faction identification with custom colors and icons
 - Search and filter UI with real-time updates
