@@ -132,6 +132,9 @@ Preferred communication style: Simple, everyday language.
 - Implemented stable animation delays per faction (no render jitter)
 - Animation timing creates wave effect across regions for visual appeal
 - Factions spread across map positions: center, northeast, east, northwest, west, north, southeast, south, southwest, far east
+- Custom Rhodes Island icon component featuring Arknights-inspired geometric crystal design
+- Selected faction regions display in dark red (red-800 to red-900 gradient) with red ring and pulsing border
+- Clicking a faction turns it dark red while the modal is open, clearing selection on modal close
 
 ### Admin Interface Implementation
 - Created comprehensive admin page at /admin for managing seating arrangements

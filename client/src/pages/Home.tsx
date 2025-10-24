@@ -60,8 +60,16 @@ export default function Home() {
   }, [tables, guests]);
 
   const handleMapFactionSelect = (faction: Faction) => {
+    setSelectedFactions([faction]);
     setDialogFaction(faction);
     setDialogOpen(true);
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setDialogOpen(open);
+    if (!open) {
+      setSelectedFactions([]);
+    }
   };
 
   const getGuestsForFaction = (faction: Faction) => {
@@ -193,7 +201,7 @@ export default function Home() {
         </Tabs>
       </div>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <Dialog open={dialogOpen} onOpenChange={handleDialogClose}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" data-testid="faction-dialog">
           {dialogFaction && (
             <>
