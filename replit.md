@@ -1,4 +1,4 @@
-# Terra Wedding Seating Plan
+# Wedding of Leandro Kim and Sherine Lim - Seating Plan
 
 ## Overview
 
