@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a wedding seating chart application themed around the Arknights game universe, featuring Terra map locations and faction-based guest organization. The application allows guests to search for their assigned table by name or faction, with an Arknights-inspired UI aesthetic adapted for a wedding context using white themes and geometric design elements.
+This project is an Arknights-themed wedding seating chart application. It allows guests to find their assigned tables using an interactive map of Terra, featuring faction-based organization and an Arknights-inspired UI adapted for a wedding context. The application includes guest search, table management for administrators, and a unique visual design integrating geometric elements and character-specific aesthetics.
 
 ## User Preferences
 
@@ -10,289 +10,61 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
+### Frontend
 
-**Framework & Build System**
-- React 18 with TypeScript for type-safe component development
-- Vite as the build tool and development server for fast HMR and optimized production builds
-- Wouter for lightweight client-side routing
-- Single-page application architecture with component-based design
+The frontend uses React 18 with TypeScript, Vite for bundling, and Wouter for routing. UI is built with Shadcn/ui (New York style) and Radix UI primitives, styled using Tailwind CSS with custom design tokens and Class Variance Authority. Typography utilizes Google Fonts (Rajdhani, Inter, Orbitron) for distinct visual hierarchy. State management is handled by TanStack Query for server state and React hooks for local component state. Interactive features include an autocomplete search, a "Slide to Enter" welcome page, and a dynamic chat notification system. The interactive map features geometric clipping paths, faction-specific color coding, and radar pulse animations.
 
-**UI Component System**
-- Shadcn/ui component library (New York style variant) providing pre-built, customizable React components
-- Radix UI primitives for accessible, unstyled UI components
-- Tailwind CSS for utility-first styling with custom design tokens
-- Class Variance Authority (CVA) for managing component variants
-- Custom design system following Arknights aesthetic with geometric shapes, angular elements, and faction-based color schemes
+### Backend
 
-**Typography Strategy**
-- Google Fonts integration with three font families:
-  - Rajdhani (700, 600, 500) for headings and labels
-  - Inter (400, 500, 600) for body text
-  - Orbitron (700) for location names and faction badges
+The backend is an Express.js server with TypeScript, integrating Vite middleware for development. It provides a RESTful API with full CRUD operations for guests and tables. Zod is used for schema validation on all POST/PATCH requests to ensure data integrity.
 
-**State Management**
-- TanStack Query (React Query) for server state management and data fetching
-- React hooks (useState, useMemo) for local component state
-- Custom hooks for responsive behavior (use-mobile, use-toast)
+### Data Storage
 
-**Data Flow**
-- Dynamic data fetching via RESTful API endpoints
-- TanStack Query handles server state with automatic cache invalidation
-- Client-side filtering and search using useMemo for performance
-- Real-time updates when data changes through admin interface
+PostgreSQL, accessed via `@neondatabase/serverless`, is the target database. Drizzle ORM provides type-safe queries and schema definitions. The schema includes `users` (for authentication), `tables` (with grid coordinates), and `guests` (linked to tables by a foreign key). Initially, data is stored in-memory from `shared/wedding-data.ts`, persisting for the application's runtime.
 
-### Backend Architecture
+### Authentication
 
-**Server Framework**
-- Express.js HTTP server with TypeScript
-- Vite middleware integration for development with HMR
-- Static file serving for production builds
+An owner-only authentication system is implemented using Passport.js with a local strategy and session-based authentication (Memorystore for development). Password hashing is done with scrypt. A first-time setup flow allows for a single owner account creation, after which registration is disabled. All admin routes (POST/PATCH/DELETE for guests and tables) are protected, while GET endpoints are public.
 
-**Development vs Production**
-- Development: Vite dev server middleware handles React app serving
-- Production: Pre-built static files served from dist/public directory
-- Request logging middleware for API routes
+### Design System
 
-**API Structure**
-- RESTful API routes in server/routes.ts with full CRUD operations
-- Guest endpoints: GET /api/guests, POST /api/guests, PATCH /api/guests/:id, DELETE /api/guests/:id
-- Table endpoints: GET /api/tables, POST /api/tables, PATCH /api/tables/:id, DELETE /api/tables/:id
-- Zod schema validation on all POST/PATCH requests preventing ID mutations
-- Table reference validation ensures guests can only be assigned to existing tables
-- Comprehensive error handling with 400/404 status codes
-
-### Data Storage Solutions
-
-**Database Schema (Drizzle ORM)**
-- PostgreSQL as the target database (via @neondatabase/serverless)
-- Drizzle ORM for type-safe database queries and schema definitions
-- Schema includes three main tables:
-  - `users`: Authentication/user management (id, username, password)
-  - `tables`: Wedding table locations (id, name, gridX, gridY for map positioning)
-  - `guests`: Guest information (id, name, faction, tableId foreign key)
-
-**Data Organization**
-- Factions: 10 predefined factions (Rhodes Island, Lungmen, Ursus, Victoria, Kazimierz, Laterano, Siesta, Bolivar, Sargon, Yan)
-- Grid-based table layout system for visual representation on Terra map
-- Relationship: One table to many guests
-
-**Current Data Source**
-- In-memory storage (MemStorage) initialized from shared/wedding-data.ts
-- 10 tables mapped to grid coordinates
-- 50+ guests pre-assigned to tables by faction
-- Data persists during application runtime and resets on server restart
-- Storage implements IStorage interface for all CRUD operations
-
-### Authentication and Authorization
-
-**Owner-Only Authentication System**
-- Passport-local strategy with session-based authentication
-- Memorystore for session storage during development
-- Password hashing using scrypt with salt for security
-- First-time setup flow allows creating single owner account
-- Registration automatically disabled after first account creation
-
-**Authentication Flow**
-1. First visit to /admin redirects to /setup if no users exist
-2. Owner creates account via secure setup page
-3. Subsequent visits to /admin redirect to /login
-4. Protected routes require authentication
-5. Admin dashboard includes logout functionality
-
-**Security Implementation**
-- Scrypt password hashing with random salt (16 bytes)
-- Session-based authentication with SESSION_SECRET environment variable
-- CORS and credential handling configured in API client
-- All admin routes (POST/PATCH/DELETE) protected with requireAuth middleware
-- Only one owner account allowed (enforced at registration endpoint)
-
-**Protected Endpoints**
-- POST /api/tables (requires auth)
-- PATCH /api/tables/:id (requires auth)
-- DELETE /api/tables/:id (requires auth)
-- POST /api/guests (requires auth)
-- PATCH /api/guests/:id (requires auth)
-- DELETE /api/guests/:id (requires auth)
-
-**Public Endpoints**
-- GET /api/tables (read-only for guests)
-- GET /api/guests (read-only for guests)
-- GET /api/tables/:id (read-only)
-- GET /api/tables/:tableId/guests (read-only)
-
-### Design System Architecture
-
-**Theme Configuration**
-- CSS custom properties for color system with light/dark mode support
-- Tailwind extended configuration with custom border radii and color palette
-- HSL color format for consistent theming
-- Elevation system using opacity-based overlays (elevate-1, elevate-2)
-
-**Component Patterns**
-- Geometric clipping paths for Arknights-style angular corners
-- Faction-specific color coding with icons
-- Hover and active states using elevation classes
-- Responsive grid layouts for table visualization
-
-**Visual Design Elements**
-- Terra map background image at full opacity for clear visibility
-- Badge system for faction identification with faction icons
-- Uniform grey color scheme for all faction regions at full opacity
-- Faction names displayed in light grey text
-- Guest count numbers and icons displayed in light grey text
-- Search and filter UI with real-time updates
-- Top-left corner text displays "PRTS SYNTHESIZE INFORMATION ANALYSIS" with typewriter animation effect and continuous blinking cursor (no background box)
-- Spread-out faction positioning across 16:10 landscape map
-- Radar pulse animations with stable timing for each faction region (all in grey)
-
-## Recent Changes (October 24, 2025)
-
-### Navigation Redesign
-- Replaced tab navigation with menu modal dialog system
-- Menu button opens modal with view selection options
-- Two available views: "Table Map" (interactive faction-based map) and "Guest List" (all guests by table)
-- Current view persists while menu is closed
-- Menu dialog displays descriptive text for each view option
-
-### Welcome Page Implementation
-- Converted header into full-screen welcome page
-- Replaced "Enter" button with interactive "Slide to Enter" slider
-- Welcome page uses dark grey gradient theme (gray-900 to gray-800)
-- Slider thumb styled in white with grey hover state
-- Welcome page displays couple's names, wedding date, and welcome message
-
-### Search Interface Improvements
-- Search bar positioned in left corner with reduced width (max-w-md)
-- Search bar only visible on Table Map view
-- Removed "Find Your Table" heading for cleaner interface
-
-### Couple's Notification - Live Chat Interface
-- Phone-style chat interface in bottom right corner with floating heart button
-- Chat bubble button shows notification badge (number "1") when new message arrives
-- Clicking bubble opens chat window with gradient header (green to emerald - neon green theme)
-- Chat window displays messages from couple in messaging app style with:
-  - Profile avatars with heart icons in neon green gradient
-  - Message bubbles with rounded corners
-  - Timestamp indicators ("Just now")
-  - Welcome messages with emojis
-- Appears automatically 1 second after entering the main interface
-- Chat can be opened/closed by clicking the floating heart button
-- Smooth animations for chat window expansion/collapse
-- Neon green color scheme throughout (chat button, header, avatars)
-
-### Owner-Only Authentication Implementation
-- Created secure authentication system using Passport.js with local strategy
-- Implemented first-time setup page (/setup) for owner account creation
-- Added login page (/login) for subsequent authentication
-- Protected all admin routes with authentication middleware
-- Only one owner account allowed (registration disabled after first account)
-- Admin dashboard includes logout button and navigation to home
-- Session-based authentication with password hashing (scrypt with salt)
-- All mutation endpoints (POST/PATCH/DELETE) require authentication
-
-### Map Redesign - Landscape Layout with Radar Animations
-- Redesigned interactive map to landscape format (16:10 aspect ratio)
-- Replaced circular command region layout with spread-out faction positioning
-- Each faction positioned at fixed coordinates across the map for better spatial coverage
-- Added dual radar pulse animations to each faction region using CSS keyframes
-- Implemented stable animation delays per faction (no render jitter)
-- Animation timing creates wave effect across regions for visual appeal
-- Factions spread across map positions: center, northeast, east, northwest, west, north, southeast, south, southwest, far east
-- Custom Rhodes Island icon component featuring Arknights-inspired geometric crystal design
-- Faction regions show maroon red (red-900 to red-950) hover effect for visual feedback
-- Radar pulse animations turn red when hovering over faction regions
-- Selected faction regions display in dark red (red-800 to red-900 gradient) with red ring and pulsing border
-- Clicking a faction turns it dark red while the modal is open, clearing selection on modal close
-
-### Admin Interface Implementation
-- Created comprehensive admin page at /admin for managing seating arrangements
-- Table-organized view showing all guests grouped by their assigned tables
-- Guest management features:
-  - Move guests between tables using dropdown selection
-  - Add new guests with validated forms
-  - Edit existing guest details
-  - Delete guests with confirmation
-- Table management features:
-  - Add new tables with grid positioning
-  - View guest counts per table
-- Navigation between Home and Admin pages with persistent floating buttons
-
-### API & Data Layer
-- Migrated from static data imports to dynamic API-based data fetching
-- Implemented full CRUD operations for guests and tables
-- Added Zod validation schemas (insertTableSchema, insertGuestSchema, updateTableSchema, updateGuestSchema)
-- Update schemas explicitly omit ID fields to prevent data corruption
-- Table reference validation ensures referential integrity
-- All mutations include error handlers with user-facing toast notifications
-
-### Interactive Features
-- Added autocomplete dropdown to search bar showing up to 8 guest name suggestions
-- Each suggestion displays guest name, faction badge, and assigned table
-- Keyboard navigation support (Arrow keys, Enter to select, Escape to close)
-- Click-to-select functionality for suggestions
-- Click outside dropdown to close
-- Faction region click opens modal dialog showing all guests seated at that table
-- Modal displays circular table visualization with:
-  - Round table center showing table name and total seat count
-  - Guests positioned around the circle with numbered seats (1, 2, 3, etc.)
-  - Each guest card shows name and faction badge with Arknights-style angular corners
-  - Automatic positioning based on number of guests
-- Removed faction filter buttons for cleaner search interface
-- Search now only supports guest name search with autocomplete suggestions
-
-### UI/UX Improvements
-- Loading states for all data fetching operations
-- Toast notifications for all CRUD operations (success and error cases)
-- Responsive layout with proper scrolling and spacing
-- Faction badges with icons and color coding throughout admin interface
+The design system uses CSS custom properties for theming (light/dark mode support), Tailwind for styling, and HSL for consistent color usage. It incorporates geometric clipping paths, faction-specific color coding with icons, and elevation effects. Visual elements include a Terra map background, badge system for faction identification, responsive grid layouts, and a "PRTS SYNTHESIZE INFORMATION ANALYSIS" typewriter effect in the top-left corner. The map is designed in a 16:10 landscape format with spread-out faction positioning and dual radar pulse animations.
 
 ## External Dependencies
 
-**Core Framework Dependencies**
-- React ecosystem: react, react-dom, @tanstack/react-query
-- Build tools: vite, @vitejs/plugin-react, esbuild
-- Routing: wouter
-- Backend: express, Node.js http server
+**Core Frameworks & Tools:**
+*   **Frontend:** React, Vite, Wouter, TanStack Query
+*   **Backend:** Express.js, Node.js
 
-**Database & ORM**
-- drizzle-orm for database operations
-- drizzle-kit for migrations and schema management
-- @neondatabase/serverless for Neon PostgreSQL connection
-- drizzle-zod for schema validation
-- connect-pg-simple for PostgreSQL session storage
+**Database & ORM:**
+*   PostgreSQL (`@neondatabase/serverless`)
+*   Drizzle ORM, Drizzle-kit, Drizzle-Zod
+*   `connect-pg-simple`
 
-**Authentication**
-- passport for authentication middleware
-- passport-local for username/password authentication
-- express-session for session management
-- memorystore for in-memory session storage
-- Node.js crypto (scrypt) for password hashing
+**Authentication:**
+*   Passport.js (`passport`, `passport-local`)
+*   `express-session`, `memorystore`
+*   Node.js `crypto` (for scrypt)
 
-**UI Component Libraries**
-- @radix-ui/* packages (30+ components for accessible UI primitives)
-- lucide-react for icon system
-- embla-carousel-react for carousel functionality
-- cmdk for command palette patterns
-- recharts for potential data visualization
+**UI Components & Styling:**
+*   Shadcn/ui, Radix UI
+*   Tailwind CSS, PostCSS, Autoprefixer
+*   `clsx`, `tailwind-merge`, `class-variance-authority`
+*   `lucide-react` (icons)
+*   Google Fonts (Rajdhani, Inter, Orbitron)
 
-**Styling & Utilities**
-- tailwindcss with postcss and autoprefixer
-- clsx and tailwind-merge for className management
-- class-variance-authority for component variants
-- date-fns for date manipulation
+**Form Handling & Validation:**
+*   `react-hook-form`
+*   `@hookform/resolvers`
+*   Zod
 
-**Form Handling**
-- react-hook-form for form state management
-- @hookform/resolvers for validation integration
-- zod for schema validation
+**Utilities:**
+*   `date-fns`
 
-**Development Tools**
-- TypeScript for type safety
-- tsx for running TypeScript in Node.js
-- @replit/* plugins for Replit-specific development features (cartographer, dev banner, error overlay)
+**Development Tools:**
+*   TypeScript, `tsx`
+*   `@replit/*` plugins
 
-**Asset Management**
-- Google Fonts CDN for Rajdhani, Orbitron, and Inter typefaces
-- Custom Terra map background images in attached_assets directory
-- Image imports via Vite's asset handling
+**Asset Management:**
+*   Google Fonts CDN
+*   Custom Terra map background images
