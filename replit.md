@@ -170,15 +170,16 @@ Preferred communication style: Simple, everyday language.
 ### Couple's Notification - Live Chat Interface
 - Phone-style chat interface in bottom right corner with floating heart button
 - Chat bubble button shows notification badge (number "1") when new message arrives
-- Clicking bubble opens chat window with gradient header (red to pink)
+- Clicking bubble opens chat window with gradient header (green to emerald - neon green theme)
 - Chat window displays messages from couple in messaging app style with:
-  - Profile avatars with heart icons
+  - Profile avatars with heart icons in neon green gradient
   - Message bubbles with rounded corners
   - Timestamp indicators ("Just now")
   - Welcome messages with emojis
 - Appears automatically 1 second after entering the main interface
 - Chat can be opened/closed by clicking the floating heart button
 - Smooth animations for chat window expansion/collapse
+- Neon green color scheme throughout (chat button, header, avatars)
 
 ### Owner-Only Authentication Implementation
 - Created secure authentication system using Passport.js with local strategy
