@@ -128,8 +128,8 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
   const factions = Object.keys(factionTables) as Faction[];
 
   return (
-    <div className="relative">
-      <div className="relative overflow-hidden rounded-lg border-2 border-primary/20 bg-gradient-to-br from-background to-muted/30 p-8">
+    <div className="relative w-full h-full">
+      <div className="relative overflow-hidden border-2 border-primary/20 bg-gradient-to-br from-background to-muted/30 w-full h-full">
         <div 
           className="absolute inset-0"
           style={{
@@ -139,8 +139,8 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
           }}
         />
 
-        <div className="relative flex items-center justify-center min-h-[700px]">
-          <div className="relative w-full aspect-[16/10]">
+        <div className="relative flex items-center justify-center w-full h-full">
+          <div className="relative w-full h-full">
             <div className="absolute inset-0">
               <div className="relative w-full h-full">
                 {factions.map((faction) => {
