@@ -214,9 +214,9 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                                   {faction}
                                 </h4>
                                 
-                                <div className="flex items-center gap-1 text-muted-foreground mt-0.5">
-                                  <Users className="w-3 h-3 flex-shrink-0" />
-                                  <span className="text-xs font-display font-semibold text-black">
+                                <div className="flex items-center gap-1 mt-0.5">
+                                  <Users className="w-3 h-3 flex-shrink-0 text-gray-300" />
+                                  <span className="text-xs font-display font-semibold text-gray-300">
                                     {guestCount}
                                   </span>
                                 </div>
