@@ -5,15 +5,16 @@ import SearchBar from "@/components/SearchBar";
 import GuestCard from "@/components/GuestCard";
 import TableGridCell from "@/components/TableGridCell";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
-import { Button } from "@/components/ui/button";
-import { Map, Grid3x3 } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import FactionBadge from "@/components/FactionBadge";
+import { Map, Grid3x3, List } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFactions, setSelectedFactions] = useState<Faction[]>([]);
   const [highlightedTableId, setHighlightedTableId] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'map'>('map');
 
   const { data: tables = [], isLoading: tablesLoading } = useQuery<Table[]>({
     queryKey: ["/api/tables"],
@@ -79,6 +80,13 @@ export default function Home() {
     }
   };
 
+  const tablesByGuest = useMemo(() => {
+    return tables.map(table => ({
+      table,
+      guests: guests.filter(g => g.tableId === table.id)
+    })).filter(item => item.guests.length > 0);
+  }, [tables, guests]);
+
   if (tablesLoading || guestsLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -93,22 +101,46 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid lg:grid-cols-[1fr,2fr] gap-8">
-          <div className="space-y-6">
-            <div className="sticky top-4 space-y-6">
-              <div>
-                <h2 className="font-display text-2xl font-bold text-foreground mb-4">Find Your Table</h2>
-                <SearchBar
-                  searchQuery={searchQuery}
-                  onSearchChange={setSearchQuery}
-                  selectedFactions={selectedFactions}
-                  onFactionToggle={handleFactionToggle}
-                  onClearAll={handleClearAll}
-                />
-              </div>
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-6">
+          <h2 className="font-display text-3xl font-bold text-foreground mb-4">Find Your Table</h2>
+          <SearchBar
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            selectedFactions={selectedFactions}
+            onFactionToggle={handleFactionToggle}
+            onClearAll={handleClearAll}
+          />
+        </div>
 
-              <div>
+        <Tabs defaultValue="map" className="space-y-6" data-testid="view-tabs">
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3" data-testid="tabs-list">
+            <TabsTrigger value="map" data-testid="tab-map">
+              <Map className="w-4 h-4 mr-2" />
+              Interactive Map
+            </TabsTrigger>
+            <TabsTrigger value="grid" data-testid="tab-grid">
+              <Grid3x3 className="w-4 h-4 mr-2" />
+              Grid Layout
+            </TabsTrigger>
+            <TabsTrigger value="list" data-testid="tab-list">
+              <List className="w-4 h-4 mr-2" />
+              Guest List
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="map" className="space-y-4" data-testid="content-map">
+            <div className="w-full">
+              <InteractiveTerraMap
+                tables={tables}
+                guestCounts={guestCounts}
+                selectedFaction={selectedFactions[0] || null}
+                onFactionSelect={handleMapFactionSelect}
+              />
+            </div>
+
+            {filteredGuests.length > 0 && (
+              <div className="mt-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-display text-lg font-semibold text-foreground">
                     Search Results
@@ -117,92 +149,82 @@ export default function Home() {
                     {filteredGuests.length} of {guests.length}
                   </span>
                 </div>
-                
-                <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
-                  {filteredGuests.length > 0 ? (
-                    filteredGuests.map((guest) => {
-                      const table = tables.find(t => t.id === guest.tableId)!;
-                      return (
-                        <GuestCard
-                          key={guest.id}
-                          guest={guest}
-                          table={table}
-                          onClick={() => handleGuestClick(guest.tableId)}
-                        />
-                      );
-                    })
-                  ) : (
-                    <div className="text-center py-12 text-muted-foreground">
-                      <p className="font-display">No operators found</p>
-                      <p className="text-sm mt-1">Try adjusting your search criteria</p>
-                    </div>
-                  )}
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                  {filteredGuests.map((guest) => {
+                    const table = tables.find(t => t.id === guest.tableId)!;
+                    return (
+                      <GuestCard
+                        key={guest.id}
+                        guest={guest}
+                        table={table}
+                        onClick={() => handleGuestClick(guest.tableId)}
+                      />
+                    );
+                  })}
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="font-display text-2xl font-bold text-foreground">Terra Map View</h2>
-              <div className="flex gap-2">
-                <Button
-                  variant={viewMode === 'map' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('map')}
-                  data-testid="button-view-map"
-                >
-                  <Map className="w-4 h-4 mr-2" />
-                  Interactive Map
-                </Button>
-                <Button
-                  variant={viewMode === 'grid' ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setViewMode('grid')}
-                  data-testid="button-view-grid"
-                >
-                  <Grid3x3 className="w-4 h-4 mr-2" />
-                  Grid Layout
-                </Button>
-              </div>
-            </div>
-
-            {viewMode === 'map' ? (
-              <InteractiveTerraMap
-                tables={tables}
-                guestCounts={guestCounts}
-                selectedFaction={selectedFactions[0] || null}
-                onFactionSelect={handleMapFactionSelect}
-              />
-            ) : (
-              <div 
-                className="grid gap-4"
-                style={{
-                  gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
-                  gridTemplateRows: `repeat(${gridRows}, minmax(0, 1fr))`
-                }}
-              >
-                {tables.map((table) => (
-                  <div
-                    key={table.id}
-                    id={`table-${table.id}`}
-                    style={{
-                      gridColumn: table.gridX + 1,
-                      gridRow: table.gridY + 1
-                    }}
-                  >
-                    <TableGridCell
-                      table={table}
-                      guestCount={getTableGuestCount(table.id)}
-                      isHighlighted={highlightedTableId === table.id}
-                      onClick={() => handleTableClick(table.id)}
-                    />
-                  </div>
-                ))}
-              </div>
             )}
-          </div>
-        </div>
+          </TabsContent>
+
+          <TabsContent value="grid" data-testid="content-grid">
+            <div 
+              className="grid gap-4 max-w-4xl mx-auto"
+              style={{
+                gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
+                gridTemplateRows: `repeat(${gridRows}, minmax(0, 1fr))`
+              }}
+            >
+              {tables.map((table) => (
+                <div
+                  key={table.id}
+                  id={`table-${table.id}`}
+                  style={{
+                    gridColumn: table.gridX + 1,
+                    gridRow: table.gridY + 1
+                  }}
+                >
+                  <TableGridCell
+                    table={table}
+                    guestCount={getTableGuestCount(table.id)}
+                    isHighlighted={highlightedTableId === table.id}
+                    onClick={() => handleTableClick(table.id)}
+                  />
+                </div>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="list" data-testid="content-list">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {tablesByGuest.map(({ table, guests: tableGuests }) => (
+                <Card key={table.id} className="overflow-hidden" data-testid={`table-card-${table.id}`}>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="font-location text-xl flex items-center justify-between">
+                      <span>{table.name}</span>
+                      <span className="text-sm text-muted-foreground font-sans">
+                        {tableGuests.length} {tableGuests.length === 1 ? 'guest' : 'guests'}
+                      </span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {tableGuests.map((guest) => (
+                        <div
+                          key={guest.id}
+                          className="flex items-center justify-between p-2 rounded-md hover-elevate active-elevate-2 cursor-pointer transition-colors"
+                          data-testid={`guest-item-${guest.id}`}
+                        >
+                          <span className="font-sans font-medium text-sm">{guest.name}</span>
+                          <FactionBadge faction={guest.faction as Faction} />
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
