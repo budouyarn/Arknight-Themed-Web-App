@@ -29,7 +29,7 @@ export default function Header() {
         <div className="text-center space-y-4">
           <div className="inline-block">
             <h1 className="font-brand text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground tracking-tight" data-testid="text-title">
-              WEDDING OF LEANDRO KIM AND SHERINE LIM
+              Leandro Kim and Sherine Lim
             </h1>
             <div className="h-1 bg-primary mt-2" style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%)" }} />
           </div>
