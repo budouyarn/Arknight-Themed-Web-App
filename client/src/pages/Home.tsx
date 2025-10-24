@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import GuestCard from "@/components/GuestCard";
@@ -6,8 +7,7 @@ import TableGridCell from "@/components/TableGridCell";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
 import { Button } from "@/components/ui/button";
 import { Map, Grid3x3 } from "lucide-react";
-import { tables, guests } from "@shared/wedding-data";
-import type { Faction } from "@shared/schema";
+import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,13 +15,21 @@ export default function Home() {
   const [highlightedTableId, setHighlightedTableId] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'map'>('map');
 
+  const { data: tables = [], isLoading: tablesLoading } = useQuery<Table[]>({
+    queryKey: ["/api/tables"],
+  });
+
+  const { data: guests = [], isLoading: guestsLoading } = useQuery<Guest[]>({
+    queryKey: ["/api/guests"],
+  });
+
   const filteredGuests = useMemo(() => {
     return guests.filter((guest) => {
       const matchesSearch = guest.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesFaction = selectedFactions.length === 0 || selectedFactions.includes(guest.faction as Faction);
       return matchesSearch && matchesFaction;
     });
-  }, [searchQuery, selectedFactions]);
+  }, [searchQuery, selectedFactions, guests]);
 
   const handleFactionToggle = (faction: Faction) => {
     setSelectedFactions(prev =>
@@ -68,6 +76,16 @@ export default function Home() {
       setSelectedFactions([faction]);
     }
   };
+
+  if (tablesLoading || guestsLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-brand font-bold text-foreground">Loading seating plan...</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
