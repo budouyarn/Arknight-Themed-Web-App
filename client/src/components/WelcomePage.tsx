@@ -148,7 +148,7 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
 
           <div
             ref={thumbRef}
-            className="absolute left-0 top-0 h-full w-20 bg-primary hover:bg-primary/90 cursor-grab active:cursor-grabbing transition-colors shadow-lg flex items-center justify-center group"
+            className="absolute left-0 top-0 h-full w-20 bg-white hover:bg-gray-100 cursor-grab active:cursor-grabbing transition-colors shadow-lg flex items-center justify-center group"
             style={{ 
               transform: `translateX(${sliderPosition}px)`,
               clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%)"
@@ -157,7 +157,7 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
             onTouchStart={(e) => handleStart(e.touches[0].clientX)}
             data-testid="slider-thumb"
           >
-            <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-6 h-6 text-gray-900 group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </div>
