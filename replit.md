@@ -37,9 +37,10 @@ Preferred communication style: Simple, everyday language.
 - Custom hooks for responsive behavior (use-mobile, use-toast)
 
 **Data Flow**
-- Static wedding data (guests and tables) imported from shared module
+- Dynamic data fetching via RESTful API endpoints
+- TanStack Query handles server state with automatic cache invalidation
 - Client-side filtering and search using useMemo for performance
-- No backend API calls in current implementation - data is hardcoded
+- Real-time updates when data changes through admin interface
 
 ### Backend Architecture
 
@@ -54,9 +55,12 @@ Preferred communication style: Simple, everyday language.
 - Request logging middleware for API routes
 
 **API Structure**
-- Placeholder routes defined in server/routes.ts (currently no active endpoints)
-- Storage interface pattern defined but using in-memory implementation
-- Prepared for CRUD operations on users, guests, and tables
+- RESTful API routes in server/routes.ts with full CRUD operations
+- Guest endpoints: GET /api/guests, POST /api/guests, PATCH /api/guests/:id, DELETE /api/guests/:id
+- Table endpoints: GET /api/tables, POST /api/tables, PATCH /api/tables/:id, DELETE /api/tables/:id
+- Zod schema validation on all POST/PATCH requests preventing ID mutations
+- Table reference validation ensures guests can only be assigned to existing tables
+- Comprehensive error handling with 400/404 status codes
 
 ### Data Storage Solutions
 
@@ -74,10 +78,11 @@ Preferred communication style: Simple, everyday language.
 - Relationship: One table to many guests
 
 **Current Data Source**
-- Static data exported from shared/wedding-data.ts
+- In-memory storage (MemStorage) initialized from shared/wedding-data.ts
 - 10 tables mapped to grid coordinates
 - 50+ guests pre-assigned to tables by faction
-- No database connection active in current implementation
+- Data persists during application runtime and resets on server restart
+- Storage implements IStorage interface for all CRUD operations
 
 ### Authentication and Authorization
 
@@ -111,6 +116,37 @@ Preferred communication style: Simple, everyday language.
 - Geometric grid overlays for tech aesthetic
 - Badge system for faction identification with custom colors and icons
 - Search and filter UI with real-time updates
+- Central hub displays "PRTS SYNTHESIZE INFORMATION ANALYSIS" with tactical command aesthetic
+- Circular command region layout with 5 zones (Central, East, West, North, South)
+
+## Recent Changes (October 24, 2025)
+
+### Admin Interface Implementation
+- Created comprehensive admin page at /admin for managing seating arrangements
+- Table-organized view showing all guests grouped by their assigned tables
+- Guest management features:
+  - Move guests between tables using dropdown selection
+  - Add new guests with validated forms
+  - Edit existing guest details
+  - Delete guests with confirmation
+- Table management features:
+  - Add new tables with grid positioning
+  - View guest counts per table
+- Navigation between Home and Admin pages with persistent floating buttons
+
+### API & Data Layer
+- Migrated from static data imports to dynamic API-based data fetching
+- Implemented full CRUD operations for guests and tables
+- Added Zod validation schemas (insertTableSchema, insertGuestSchema, updateTableSchema, updateGuestSchema)
+- Update schemas explicitly omit ID fields to prevent data corruption
+- Table reference validation ensures referential integrity
+- All mutations include error handlers with user-facing toast notifications
+
+### UI/UX Improvements
+- Loading states for all data fetching operations
+- Toast notifications for all CRUD operations (success and error cases)
+- Responsive layout with proper scrolling and spacing
+- Faction badges with icons and color coding throughout admin interface
 
 ## External Dependencies
 
