@@ -11,12 +11,12 @@
   --opaque-button-border-intensity: -8; /* In terms of percentages */
 
   /* Backgrounds applied on top of other backgrounds when hovered/active */
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
 
-  --background: 0 0% 98%;
+  --background: 0 0% 0%;
 
-  --foreground: 220 15% 15%;
+  --foreground: 0 0% 95%;
 
   --border: 220 12% 88%;
 

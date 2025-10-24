@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import FactionBadge from "@/components/FactionBadge";
-import { Map, List, Menu, X, Heart } from "lucide-react";
+import { Map, List, X, Heart } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
@@ -19,7 +19,6 @@ export default function Home() {
   const [dialogFaction, setDialogFaction] = useState<Faction | null>(null);
   const [selectedFaction, setSelectedFaction] = useState<Faction | null>(null);
   const [currentView, setCurrentView] = useState<"map" | "list">("map");
-  const [menuOpen, setMenuOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [showChatBadge, setShowChatBadge] = useState(false);
 
@@ -97,15 +96,23 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Menu Button - Top Right */}
-      <div className="fixed top-6 right-6 z-40">
+      {/* View Tabs - Top Right */}
+      <div className="fixed top-6 right-6 z-40 flex gap-2">
         <Button 
-          variant="outline" 
-          onClick={() => setMenuOpen(true)}
-          data-testid="button-menu"
+          variant={currentView === "map" ? "default" : "outline"}
+          onClick={() => setCurrentView("map")}
+          data-testid="button-view-map"
         >
-          <Menu className="w-4 h-4 mr-2" />
-          Menu
+          <Map className="w-4 h-4 mr-2" />
+          Table Map
+        </Button>
+        <Button 
+          variant={currentView === "list" ? "default" : "outline"}
+          onClick={() => setCurrentView("list")}
+          data-testid="button-view-list"
+        >
+          <List className="w-4 h-4 mr-2" />
+          Guest List
         </Button>
       </div>
 
@@ -168,52 +175,7 @@ export default function Home() {
         )}
       </div>
 
-      {/* Menu Modal Dialog */}
-      <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
-        <DialogContent className="max-w-md" data-testid="menu-dialog">
-          <DialogHeader>
-            <DialogTitle className="font-brand text-xl">Menu</DialogTitle>
-            <DialogDescription className="font-display">
-              Select a view
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="grid gap-3 mt-4">
-            <Button
-              variant="outline"
-              className="justify-start h-auto py-4"
-              onClick={() => {
-                setCurrentView("map");
-                setMenuOpen(false);
-              }}
-              data-testid="menu-option-map"
-            >
-              <Map className="w-5 h-5 mr-3" />
-              <div className="text-left">
-                <div className="font-semibold">Table Map</div>
-                <div className="text-sm text-muted-foreground">Interactive faction-based map</div>
-              </div>
-            </Button>
-            
-            <Button
-              variant="outline"
-              className="justify-start h-auto py-4"
-              onClick={() => {
-                setCurrentView("list");
-                setMenuOpen(false);
-              }}
-              data-testid="menu-option-list"
-            >
-              <List className="w-5 h-5 mr-3" />
-              <div className="text-left">
-                <div className="font-semibold">Guest List</div>
-                <div className="text-sm text-muted-foreground">View all guests by table</div>
-              </div>
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
+      {/* Faction Dialog */}
       <Dialog open={dialogOpen} onOpenChange={handleDialogClose}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" data-testid="faction-dialog">
           {dialogFaction && (
