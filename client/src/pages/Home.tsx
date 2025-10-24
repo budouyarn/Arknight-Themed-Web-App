@@ -110,6 +110,8 @@ export default function Home() {
             selectedFactions={selectedFactions}
             onFactionToggle={handleFactionToggle}
             onClearAll={handleClearAll}
+            guests={guests}
+            tables={tables}
           />
         </div>
 
