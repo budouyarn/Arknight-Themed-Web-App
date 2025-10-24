@@ -90,7 +90,7 @@ export default function Home() {
           <TabsList className="grid w-full max-w-md mx-auto grid-cols-2" data-testid="tabs-list">
             <TabsTrigger value="map" data-testid="tab-map">
               <Map className="w-4 h-4 mr-2" />
-              Interactive Map
+              Table Map
             </TabsTrigger>
             <TabsTrigger value="list" data-testid="tab-list">
               <List className="w-4 h-4 mr-2" />
