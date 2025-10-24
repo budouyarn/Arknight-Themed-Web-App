@@ -217,12 +217,12 @@ export default function Home() {
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" data-testid="faction-dialog">
           {dialogFaction && (
             <>
-              <DialogHeader>
-                <DialogTitle className="font-brand text-2xl uppercase tracking-wide flex items-center gap-3">
+              <DialogHeader className="text-center">
+                <DialogTitle className="font-brand text-2xl uppercase tracking-wide flex items-center justify-center gap-3">
                   <FactionBadge faction={dialogFaction} />
                   {dialogFaction}
                 </DialogTitle>
-                <DialogDescription className="font-display text-base">
+                <DialogDescription className="font-display text-base text-center">
                   Seating arrangement for this table
                 </DialogDescription>
               </DialogHeader>
