@@ -82,16 +82,6 @@ export default function Home() {
       <Header />
       
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6">
-          <h2 className="font-display text-3xl font-bold text-foreground mb-4">Find Your Table</h2>
-          <SearchBar
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            guests={guests}
-            tables={tables}
-          />
-        </div>
-
         <Tabs defaultValue="map" className="space-y-6" data-testid="view-tabs">
           <TabsList className="grid w-full max-w-md mx-auto grid-cols-2" data-testid="tabs-list">
             <TabsTrigger value="map" data-testid="tab-map">
@@ -105,6 +95,15 @@ export default function Home() {
           </TabsList>
 
           <TabsContent value="map" className="space-y-4" data-testid="content-map">
+            <div className="mb-6">
+              <h2 className="font-display text-3xl font-bold text-foreground mb-4">Find Your Table</h2>
+              <SearchBar
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                guests={guests}
+                tables={tables}
+              />
+            </div>
             <div className="w-full">
               <InteractiveTerraMap
                 tables={tables}
