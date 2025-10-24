@@ -61,13 +61,15 @@ export default function Home() {
     return guests.filter(g => g.tableId === tableId).length;
   };
 
-  const gridRows = Math.max(...tables.map(t => t.gridY)) + 1;
-  const gridCols = Math.max(...tables.map(t => t.gridX)) + 1;
+  const gridRows = tables.length > 0 ? Math.max(...tables.map(t => t.gridY)) + 1 : 0;
+  const gridCols = tables.length > 0 ? Math.max(...tables.map(t => t.gridX)) + 1 : 0;
 
-  const guestCounts = tables.reduce((acc, table) => {
-    acc[table.id] = getTableGuestCount(table.id);
-    return acc;
-  }, {} as Record<string, number>);
+  const guestCounts = useMemo(() => {
+    return tables.reduce((acc, table) => {
+      acc[table.id] = getTableGuestCount(table.id);
+      return acc;
+    }, {} as Record<string, number>);
+  }, [tables, guests]);
 
   const handleMapFactionSelect = (faction: Faction) => {
     if (selectedFactions.includes(faction)) {

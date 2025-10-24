@@ -34,10 +34,15 @@ export const guests = pgTable("guests", {
 export const insertTableSchema = createInsertSchema(tables);
 export const insertGuestSchema = createInsertSchema(guests);
 
+export const updateTableSchema = insertTableSchema.partial().omit({ id: true });
+export const updateGuestSchema = insertGuestSchema.partial().omit({ id: true });
+
 export type InsertTable = z.infer<typeof insertTableSchema>;
 export type Table = typeof tables.$inferSelect;
 export type InsertGuest = z.infer<typeof insertGuestSchema>;
 export type Guest = typeof guests.$inferSelect;
+export type UpdateTable = z.infer<typeof updateTableSchema>;
+export type UpdateGuest = z.infer<typeof updateGuestSchema>;
 
 export const factions = [
   "Rhodes Island",

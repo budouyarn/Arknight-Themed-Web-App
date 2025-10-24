@@ -40,6 +40,13 @@ export default function Admin() {
         description: "Guest has been removed successfully.",
       });
     },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to delete guest. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const updateGuestMutation = useMutation({
@@ -51,6 +58,13 @@ export default function Admin() {
       toast({
         title: "Guest updated",
         description: "Guest has been updated successfully.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to update guest. Please try again.",
+        variant: "destructive",
       });
     },
   });
@@ -293,6 +307,13 @@ function AddGuestForm({
       });
       onSuccess();
     },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to add guest. Please check the data and try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -401,6 +422,13 @@ function EditGuestForm({
       });
       onSuccess();
     },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to update guest. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -488,6 +516,13 @@ function AddTableForm({ onSuccess }: { onSuccess: () => void }) {
         description: "Table has been added successfully.",
       });
       onSuccess();
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error?.message || "Failed to add table. Please check the data and try again.",
+        variant: "destructive",
+      });
     },
   });
 
