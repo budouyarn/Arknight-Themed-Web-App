@@ -131,7 +131,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
     <div className="relative">
       <div className="relative overflow-hidden rounded-lg border-2 border-primary/20 bg-gradient-to-br from-background to-muted/30 p-8">
         <div 
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-30"
           style={{
             backgroundImage: `url(${terraMapBg})`,
             backgroundSize: 'cover',
