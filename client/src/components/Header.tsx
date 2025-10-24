@@ -34,6 +34,10 @@ export default function Header() {
             <div className="h-1 bg-primary mt-2" style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%)" }} />
           </div>
           
+          <p className="font-display text-2xl sm:text-3xl font-semibold text-foreground/90" data-testid="text-date">
+            December 7, 2024
+          </p>
+          
           <p className="font-display text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Welcome, Operators. Locate your designated table for the celebration.
           </p>
