@@ -310,10 +310,10 @@ export default function Home() {
             setChatOpen(!chatOpen);
             setShowChatBadge(false);
           }}
-          className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 hover:from-green-600 hover:to-emerald-500 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center relative"
+          className="w-16 h-16 rounded-full bg-gradient-to-br from-lime-400 to-yellow-300 hover:from-lime-500 hover:to-yellow-400 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center relative"
           data-testid="button-chat-toggle"
         >
-          <Heart className="w-8 h-8 text-white fill-white" />
+          <Heart className="w-8 h-8 text-gray-800 fill-gray-800" />
           {showChatBadge && !chatOpen && (
             <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
               1
