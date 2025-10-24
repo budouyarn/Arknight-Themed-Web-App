@@ -8,13 +8,17 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Pencil, Trash2, Users, ArrowRight } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { useLocation } from "wouter";
+import { Plus, Pencil, Trash2, Users, ArrowRight, LogOut, Home as HomeIcon } from "lucide-react";
 import type { Guest, Table, Faction } from "@shared/schema";
 import { factions } from "@shared/schema";
 import FactionBadge from "@/components/FactionBadge";
 
 export default function Admin() {
   const { toast } = useToast();
+  const { logoutMutation } = useAuth();
+  const [, setLocation] = useLocation();
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
   const [selectedTable, setSelectedTable] = useState<Table | null>(null);
   const [isAddGuestOpen, setIsAddGuestOpen] = useState(false);
@@ -91,6 +95,14 @@ export default function Admin() {
     );
   }
 
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        setLocation("/");
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-background p-6">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -103,6 +115,22 @@ export default function Admin() {
           </div>
 
           <div className="flex gap-3">
+            <Button
+              variant="outline"
+              onClick={() => setLocation("/")}
+              data-testid="button-home"
+            >
+              <HomeIcon className="w-4 h-4 mr-2" />
+              Home
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              data-testid="button-logout"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
             <Dialog open={isAddGuestOpen} onOpenChange={setIsAddGuestOpen}>
               <DialogTrigger asChild>
                 <Button data-testid="button-add-guest">

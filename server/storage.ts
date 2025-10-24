@@ -1,11 +1,15 @@
 import { type User, type InsertUser, type Guest, type InsertGuest, type Table, type InsertTable } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { tables as initialTables, guests as initialGuests } from "@shared/wedding-data";
+import session from "express-session";
+import createMemoryStore from "memorystore";
 
-// modify the interface with any CRUD methods
-// you might need
+const MemoryStore = createMemoryStore(session);
 
 export interface IStorage {
+  sessionStore: session.Store;
+  
+  getAllUsers(): Promise<User[]>;
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
@@ -25,17 +29,25 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
+  public sessionStore: session.Store;
   private users: Map<string, User>;
   private tables: Map<string, Table>;
   private guests: Map<string, Guest>;
 
   constructor() {
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000,
+    });
     this.users = new Map();
     this.tables = new Map();
     this.guests = new Map();
     
     initialTables.forEach(table => this.tables.set(table.id, table));
     initialGuests.forEach(guest => this.guests.set(guest.id, guest));
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    return Array.from(this.users.values());
   }
 
   async getUser(id: string): Promise<User | undefined> {
