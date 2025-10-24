@@ -1,11 +1,12 @@
-import { Shield, Star, Users, Globe, Sword, Crown, Sun, Flame, Mountain, Sparkles } from "lucide-react";
+import { Star, Users, Globe, Sword, Crown, Sun, Flame, Mountain, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import RhodesIslandIcon from "@/components/icons/RhodesIslandIcon";
 import type { Faction } from "@shared/schema";
 
-const factionConfig: Record<Faction, { color: string; icon: typeof Shield; bgColor: string }> = {
+const factionConfig: Record<Faction, { color: string; icon: typeof Star | typeof RhodesIslandIcon; bgColor: string }> = {
   "Rhodes Island": { 
     color: "text-blue-600", 
-    icon: Shield,
+    icon: RhodesIslandIcon,
     bgColor: "bg-blue-50 border-blue-200"
   },
   "Lungmen": { 
