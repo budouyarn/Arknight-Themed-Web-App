@@ -2,15 +2,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, X, UserCircle2 } from "lucide-react";
 import FactionBadge from "./FactionBadge";
-import { factions, type Faction, type Guest, type Table } from "@shared/schema";
+import { type Faction, type Guest, type Table } from "@shared/schema";
 import { useState, useRef, useEffect, useMemo } from "react";
 
 interface SearchBarProps {
   searchQuery: string;
   onSearchChange: (query: string) => void;
-  selectedFactions: Faction[];
-  onFactionToggle: (faction: Faction) => void;
-  onClearAll: () => void;
   guests: Guest[];
   tables: Table[];
 }
@@ -18,9 +15,6 @@ interface SearchBarProps {
 export default function SearchBar({ 
   searchQuery, 
   onSearchChange, 
-  selectedFactions, 
-  onFactionToggle,
-  onClearAll,
   guests,
   tables
 }: SearchBarProps) {
@@ -175,38 +169,6 @@ export default function SearchBar({
             </div>
           </div>
         )}
-      </div>
-      
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-display font-semibold text-foreground">Filter by Faction</span>
-          {selectedFactions.length > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={onClearAll}
-              data-testid="button-clear-filters"
-            >
-              Clear All
-            </Button>
-          )}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {factions.map((faction) => (
-            <button
-              key={faction}
-              onClick={() => onFactionToggle(faction)}
-              className={`transition-opacity ${
-                selectedFactions.length === 0 || selectedFactions.includes(faction)
-                  ? 'opacity-100'
-                  : 'opacity-40'
-              }`}
-              data-testid={`button-faction-${faction.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              <FactionBadge faction={faction} />
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   );
