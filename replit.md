@@ -167,6 +167,13 @@ Preferred communication style: Simple, everyday language.
 - Search bar only visible on Table Map view
 - Removed "Find Your Table" heading for cleaner interface
 
+### Couple's Notification Popup
+- Added notification popup in bottom right corner with message from the couple
+- Appears automatically 1 second after entering the main interface
+- Features heart icon and personal message from Leandro & Sherine
+- Includes close button for dismissal
+- Animated slide-in effect from bottom
+
 ### Owner-Only Authentication Implementation
 - Created secure authentication system using Passport.js with local strategy
 - Implemented first-time setup page (/setup) for owner account creation

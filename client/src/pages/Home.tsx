@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import WelcomePage from "@/components/WelcomePage";
 import SearchBar from "@/components/SearchBar";
@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import FactionBadge from "@/components/FactionBadge";
-import { Map, List, Menu } from "lucide-react";
+import { Map, List, Menu, X, Heart } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
@@ -20,6 +20,16 @@ export default function Home() {
   const [selectedFaction, setSelectedFaction] = useState<Faction | null>(null);
   const [currentView, setCurrentView] = useState<"map" | "list">("map");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    if (hasEntered) {
+      const timer = setTimeout(() => {
+        setShowNotification(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasEntered]);
 
   const { data: tables = [], isLoading: tablesLoading } = useQuery<Table[]>({
     queryKey: ["/api/tables"],
@@ -226,6 +236,43 @@ export default function Home() {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Couple's Notification */}
+      {showNotification && (
+        <div 
+          className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5 duration-500"
+          data-testid="notification-popup"
+        >
+          <Card className="w-80 shadow-lg border-2">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-red-500 fill-red-500" />
+                  <CardTitle className="font-brand text-lg">From the Couple</CardTitle>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setShowNotification(false)}
+                  className="h-6 w-6"
+                  data-testid="button-close-notification"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Thank you for joining us on our special day! We're thrilled to celebrate this moment with you. 
+                Please find your seat and enjoy the celebration.
+              </p>
+              <p className="text-sm font-semibold mt-3 text-foreground">
+                - Leandro & Sherine
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
