@@ -109,9 +109,7 @@ function TypewriterText({ text, speed = 50 }: { text: string; speed?: number }) 
   return (
     <>
       {displayText}
-      {currentIndex < text.length && (
-        <span className="inline-block w-0.5 h-5 bg-primary ml-1 align-middle" style={{ opacity: showCursor ? 1 : 0 }} />
-      )}
+      <span className="inline-block w-0.5 h-5 bg-primary ml-1 align-middle" style={{ opacity: showCursor ? 1 : 0 }} />
     </>
   );
 }
