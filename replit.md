@@ -117,9 +117,19 @@ Preferred communication style: Simple, everyday language.
 - Badge system for faction identification with custom colors and icons
 - Search and filter UI with real-time updates
 - Central hub displays "PRTS SYNTHESIZE INFORMATION ANALYSIS" with tactical command aesthetic
-- Circular command region layout with 5 zones (Central, East, West, North, South)
+- Spread-out faction positioning across 16:10 landscape map
+- Radar pulse animations with stable timing for each faction region
 
 ## Recent Changes (October 24, 2025)
+
+### Map Redesign - Landscape Layout with Radar Animations
+- Redesigned interactive map to landscape format (16:10 aspect ratio)
+- Replaced circular command region layout with spread-out faction positioning
+- Each faction positioned at fixed coordinates across the map for better spatial coverage
+- Added dual radar pulse animations to each faction region using CSS keyframes
+- Implemented stable animation delays per faction (no render jitter)
+- Animation timing creates wave effect across regions for visual appeal
+- Factions spread across map positions: center, northeast, east, northwest, west, north, southeast, south, southwest, far east
 
 ### Admin Interface Implementation
 - Created comprehensive admin page at /admin for managing seating arrangements
