@@ -157,7 +157,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                   return (
                     <div
                       key={faction}
-                      className="absolute"
+                      className="absolute group/region"
                       style={{
                         left: position.left,
                         top: position.top,
@@ -166,7 +166,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                     >
                       <div className="relative">
                         <div 
-                          className="absolute inset-0 rounded-full animate-radar-ping"
+                          className="absolute inset-0 rounded-full animate-radar-ping transition-colors duration-300"
                           style={{
                             backgroundColor: color,
                             animation: `radar-pulse 3s cubic-bezier(0, 0, 0.2, 1) infinite`,
@@ -175,7 +175,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                         />
                         
                         <div 
-                          className="absolute inset-0 rounded-full animate-radar-ping"
+                          className="absolute inset-0 rounded-full animate-radar-ping transition-colors duration-300"
                           style={{
                             backgroundColor: color,
                             animation: `radar-pulse 3s cubic-bezier(0, 0, 0.2, 1) infinite`,
