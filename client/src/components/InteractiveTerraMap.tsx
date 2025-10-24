@@ -39,22 +39,48 @@ const factionColors: Record<Faction, string> = {
   "Yan": "from-pink-500/20 to-pink-600/30 border-pink-400/40 hover:from-pink-500/30 hover:to-pink-600/40",
 };
 
-type CommandRegion = "Central Command" | "West Command" | "East Command" | "North Command" | "South Command";
-
-const commandRegions: Record<CommandRegion, Faction[]> = {
-  "Central Command": ["Rhodes Island"],
-  "East Command": ["Yan", "Lungmen"],
-  "West Command": ["Victoria", "Kazimierz"],
-  "North Command": ["Ursus"],
-  "South Command": ["Siesta", "Bolivar", "Sargon", "Laterano"],
+const radarColors: Record<Faction, string> = {
+  "Rhodes Island": "rgba(59, 130, 246, 0.3)",
+  "Lungmen": "rgba(245, 158, 11, 0.3)",
+  "Ursus": "rgba(239, 68, 68, 0.3)",
+  "Victoria": "rgba(168, 85, 247, 0.3)",
+  "Kazimierz": "rgba(234, 179, 8, 0.3)",
+  "Laterano": "rgba(6, 182, 212, 0.3)",
+  "Siesta": "rgba(249, 115, 22, 0.3)",
+  "Bolivar": "rgba(34, 197, 94, 0.3)",
+  "Sargon": "rgba(20, 184, 166, 0.3)",
+  "Yan": "rgba(236, 72, 153, 0.3)",
 };
 
-const commandColors: Record<CommandRegion, string> = {
-  "Central Command": "from-blue-600/10 to-blue-700/20 border-blue-500/30",
-  "East Command": "from-amber-600/10 to-pink-700/20 border-amber-500/30",
-  "West Command": "from-purple-600/10 to-yellow-700/20 border-purple-500/30",
-  "North Command": "from-red-600/10 to-red-700/20 border-red-500/30",
-  "South Command": "from-orange-600/10 to-teal-700/20 border-orange-500/30",
+type FactionPosition = {
+  left: string;
+  top: string;
+};
+
+const factionPositions: Record<Faction, FactionPosition> = {
+  "Rhodes Island": { left: "50%", top: "50%" },
+  "Lungmen": { left: "75%", top: "40%" },
+  "Yan": { left: "80%", top: "55%" },
+  "Victoria": { left: "15%", top: "35%" },
+  "Kazimierz": { left: "20%", top: "55%" },
+  "Ursus": { left: "45%", top: "15%" },
+  "Laterano": { left: "65%", top: "70%" },
+  "Siesta": { left: "35%", top: "75%" },
+  "Bolivar": { left: "15%", top: "70%" },
+  "Sargon": { left: "85%", top: "25%" },
+};
+
+const factionAnimationDelays: Record<Faction, [number, number]> = {
+  "Rhodes Island": [0, 1.5],
+  "Lungmen": [0.3, 1.8],
+  "Yan": [0.6, 2.1],
+  "Victoria": [0.9, 2.4],
+  "Kazimierz": [1.2, 2.7],
+  "Ursus": [1.5, 0.3],
+  "Laterano": [1.8, 0.6],
+  "Siesta": [2.1, 0.9],
+  "Bolivar": [2.4, 1.2],
+  "Sargon": [2.7, 1.5],
 };
 
 export default function InteractiveTerraMap({ tables, guestCounts, selectedFaction, onFactionSelect }: InteractiveTerraMapProps) {
@@ -68,10 +94,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
     onFactionSelect(faction);
   };
 
-  const commandRegionsList = Object.entries(commandRegions).map(([command, factions]) => ({
-    command: command as CommandRegion,
-    factions: factions.filter(f => factionTables[f]),
-  }));
+  const factions = Object.keys(factionTables) as Faction[];
 
   return (
     <div className="relative">
@@ -118,107 +141,95 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
           }}
         />
 
-        <div className="relative flex items-center justify-center min-h-[600px]">
+        <div className="relative flex items-center justify-center min-h-[700px]">
           <div className="relative w-full aspect-[16/10]">
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0">
               <div className="relative w-full h-full">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border-2 border-primary/30" 
-                  style={{
-                    boxShadow: '0 0 40px rgba(var(--primary-rgb, 66 153 225), 0.2)'
-                  }}
-                />
-                
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-primary/20" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-primary/20" />
-
-                {commandRegionsList.map((region, index) => {
-                  const angle = (index * (360 / commandRegionsList.length)) - 90;
-                  const radius = 300;
-                  const x = Math.cos(angle * Math.PI / 180) * radius;
-                  const y = Math.sin(angle * Math.PI / 180) * radius;
+                {factions.map((faction) => {
+                  const table = factionTables[faction];
+                  if (!table) return null;
+                  
+                  const Icon = factionIcons[faction];
+                  const guestCount = guestCounts[table.id] || 0;
+                  const isSelected = selectedFaction === faction;
+                  const position = factionPositions[faction];
+                  const color = radarColors[faction];
+                  const [delay1, delay2] = factionAnimationDelays[faction];
                   
                   return (
                     <div
-                      key={region.command}
-                      className="absolute top-1/2 left-1/2"
+                      key={faction}
+                      className="absolute"
                       style={{
-                        transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+                        left: position.left,
+                        top: position.top,
+                        transform: "translate(-50%, -50%)"
                       }}
                     >
-                      <div className="space-y-3 w-64">
+                      <div className="relative">
                         <div 
-                          className={`p-3 rounded-lg border-2 bg-gradient-to-r ${commandColors[region.command]} backdrop-blur-sm`}
+                          className="absolute inset-0 rounded-full animate-radar-ping"
                           style={{
-                            clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)"
+                            backgroundColor: color,
+                            animation: `radar-pulse 3s cubic-bezier(0, 0, 0.2, 1) infinite`,
+                            animationDelay: `${delay1}s`
                           }}
+                        />
+                        
+                        <div 
+                          className="absolute inset-0 rounded-full animate-radar-ping"
+                          style={{
+                            backgroundColor: color,
+                            animation: `radar-pulse 3s cubic-bezier(0, 0, 0.2, 1) infinite`,
+                            animationDelay: `${delay2}s`
+                          }}
+                        />
+
+                        <button
+                          onClick={() => handleRegionClick(faction)}
+                          className="group relative z-10 w-48"
+                          data-testid={`button-map-region-${faction.toLowerCase().replace(/\s+/g, '-')}`}
                         >
-                          <h3 className="font-brand font-bold text-sm uppercase tracking-wide text-foreground">
-                            {region.command}
-                          </h3>
-                          <p className="text-xs text-muted-foreground font-display mt-1">
-                            {region.factions.length} {region.factions.length === 1 ? 'Region' : 'Regions'}
-                          </p>
-                        </div>
-
-                        <div className="space-y-2">
-                          {region.factions.map((faction) => {
-                            const table = factionTables[faction];
-                            if (!table) return null;
+                          <div
+                            className={`
+                              relative overflow-hidden rounded-md border-2 transition-all duration-300
+                              bg-gradient-to-br ${factionColors[faction]} backdrop-blur-md
+                              ${isSelected ? 'ring-4 ring-primary scale-110 shadow-2xl' : 'scale-100 hover:scale-105'}
+                              active-elevate-2
+                            `}
+                            style={{
+                              clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)"
+                            }}
+                          >
+                            <div className="absolute inset-0 bg-grid-pattern opacity-10" />
                             
-                            const Icon = factionIcons[faction];
-                            const guestCount = guestCounts[table.id] || 0;
-                            const isSelected = selectedFaction === faction;
-                            
-                            return (
-                              <button
-                                key={faction}
-                                onClick={() => handleRegionClick(faction)}
-                                className="group relative w-full"
-                                data-testid={`button-map-region-${faction.toLowerCase().replace(/\s+/g, '-')}`}
-                              >
-                                <div
-                                  className={`
-                                    relative overflow-hidden rounded-md border-2 transition-all duration-300
-                                    bg-gradient-to-br ${factionColors[faction]}
-                                    ${isSelected ? 'ring-4 ring-primary scale-105 shadow-xl' : 'scale-100'}
-                                    active-elevate-2
-                                  `}
-                                  style={{
-                                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)"
-                                  }}
-                                >
-                                  <div className="absolute inset-0 bg-grid-pattern opacity-10" />
-                                  
-                                  <div className="relative p-3 flex items-center gap-3">
-                                    <div className={`
-                                      p-2 rounded-full bg-card/50 backdrop-blur-sm border border-white/20
-                                      transition-transform duration-200 group-hover:scale-110
-                                    `}>
-                                      <Icon className="w-4 h-4 text-foreground" />
-                                    </div>
-                                    
-                                    <div className="flex-1 text-left">
-                                      <h4 className="font-brand font-bold text-xs uppercase tracking-wide text-foreground">
-                                        {faction}
-                                      </h4>
-                                      
-                                      <div className="flex items-center gap-1 text-muted-foreground mt-0.5">
-                                        <Users className="w-3 h-3" />
-                                        <span className="text-xs font-display font-semibold">
-                                          {guestCount} {guestCount === 1 ? 'guest' : 'guests'}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {isSelected && (
-                                    <div className="absolute inset-0 border-2 border-primary rounded-md animate-pulse pointer-events-none" />
-                                  )}
+                            <div className="relative p-3 flex items-center gap-2.5">
+                              <div className={`
+                                p-2 rounded-full bg-card/60 backdrop-blur-sm border border-white/30
+                                transition-transform duration-200 group-hover:scale-110 group-hover:rotate-12
+                              `}>
+                                <Icon className="w-4 h-4 text-foreground" />
+                              </div>
+                              
+                              <div className="flex-1 text-left min-w-0">
+                                <h4 className="font-brand font-bold text-xs uppercase tracking-wide text-foreground truncate">
+                                  {faction}
+                                </h4>
+                                
+                                <div className="flex items-center gap-1 text-muted-foreground mt-0.5">
+                                  <Users className="w-3 h-3 flex-shrink-0" />
+                                  <span className="text-xs font-display font-semibold">
+                                    {guestCount}
+                                  </span>
                                 </div>
-                              </button>
-                            );
-                          })}
-                        </div>
+                              </div>
+                            </div>
+
+                            {isSelected && (
+                              <div className="absolute inset-0 border-2 border-primary rounded-md animate-pulse pointer-events-none" />
+                            )}
+                          </div>
+                        </button>
                       </div>
                     </div>
                   );
