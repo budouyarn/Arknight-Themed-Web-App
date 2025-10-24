@@ -116,20 +116,22 @@ export default function Home() {
         </Button>
       </div>
 
-      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Table Map View - Full Screen */}
+      {currentView === "map" && (
+        <div className="fixed inset-0 flex flex-col" data-testid="content-map">
+          {/* Search Bar - Fixed Top Left */}
+          <div className="fixed top-6 left-6 z-40 max-w-md">
+            <SearchBar
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              guests={guests}
+              tables={tables}
+            />
+          </div>
 
-        {/* Table Map View */}
-        {currentView === "map" && (
-          <div className="space-y-4" data-testid="content-map">
-            <div className="mb-6 max-w-md">
-              <SearchBar
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                guests={guests}
-                tables={tables}
-              />
-            </div>
-            <div className="w-full">
+          {/* Full Screen Map */}
+          <div className="w-full h-full flex items-center justify-center p-4">
+            <div className="w-full h-full max-w-[95vw] max-h-[95vh]">
               <InteractiveTerraMap
                 tables={tables}
                 guestCounts={guestCounts}
@@ -138,42 +140,42 @@ export default function Home() {
               />
             </div>
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Guest List View */}
-        {currentView === "list" && (
-          <div data-testid="content-list">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {tablesByGuest.map(({ table, guests: tableGuests }) => (
-                <Card key={table.id} className="overflow-hidden" data-testid={`table-card-${table.id}`}>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="font-location text-xl flex items-center justify-between">
-                      <span>{table.name}</span>
-                      <span className="text-sm text-muted-foreground font-sans">
-                        {tableGuests.length} {tableGuests.length === 1 ? 'guest' : 'guests'}
-                      </span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {tableGuests.map((guest) => (
-                        <div
-                          key={guest.id}
-                          className="flex items-center justify-between p-2 rounded-md hover-elevate active-elevate-2 cursor-pointer transition-colors"
-                          data-testid={`guest-item-${guest.id}`}
-                        >
-                          <span className="font-sans font-medium text-sm">{guest.name}</span>
-                          <FactionBadge faction={guest.faction as Faction} />
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+      {/* Guest List View */}
+      {currentView === "list" && (
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8" data-testid="content-list">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tablesByGuest.map(({ table, guests: tableGuests }) => (
+              <Card key={table.id} className="overflow-hidden" data-testid={`table-card-${table.id}`}>
+                <CardHeader className="pb-3">
+                  <CardTitle className="font-location text-xl flex items-center justify-between">
+                    <span>{table.name}</span>
+                    <span className="text-sm text-muted-foreground font-sans">
+                      {tableGuests.length} {tableGuests.length === 1 ? 'guest' : 'guests'}
+                    </span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    {tableGuests.map((guest) => (
+                      <div
+                        key={guest.id}
+                        className="flex items-center justify-between p-2 rounded-md hover-elevate active-elevate-2 cursor-pointer transition-colors"
+                        data-testid={`guest-item-${guest.id}`}
+                      >
+                        <span className="font-sans font-medium text-sm">{guest.name}</span>
+                        <FactionBadge faction={guest.faction as Faction} />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Faction Dialog */}
       <Dialog open={dialogOpen} onOpenChange={handleDialogClose}>

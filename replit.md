@@ -30,6 +30,11 @@ An owner-only authentication system is implemented using Passport.js with a loca
 
 The design system uses CSS custom properties for theming (light/dark mode support), Tailwind for styling, and HSL for consistent color usage. It incorporates geometric clipping paths, faction-specific color coding with icons, and elevation effects. Visual elements include a Terra map background, badge system for faction identification, responsive grid layouts, and a "PRTS SYNTHESIZE INFORMATION ANALYSIS" typewriter effect in the top-left corner. The map is designed in a 16:10 landscape format with spread-out faction positioning and dual radar pulse animations.
 
+**Layout Design:**
+- Background color: Grey-white (96% lightness) for a soft, neutral appearance
+- Table Map View: Full-screen layout utilizing the entire viewport with search bar fixed in top left and view navigation buttons fixed in top right
+- Guest List View: Centered container with maximum width for improved readability
+
 ## External Dependencies
 
 **Core Frameworks & Tools:**
