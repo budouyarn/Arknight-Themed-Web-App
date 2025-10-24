@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertGuestSchema, insertTableSchema } from "@shared/schema";
+import { insertGuestSchema, insertTableSchema, updateGuestSchema, updateTableSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Tables routes
@@ -29,11 +29,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.patch("/api/tables/:id", async (req, res) => {
-    const table = await storage.updateTable(req.params.id, req.body);
-    if (!table) {
-      return res.status(404).json({ error: "Table not found" });
+    try {
+      const validatedData = updateTableSchema.parse(req.body);
+      const table = await storage.updateTable(req.params.id, validatedData);
+      if (!table) {
+        return res.status(404).json({ error: "Table not found" });
+      }
+      res.json(table);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid table data" });
     }
-    res.json(table);
   });
 
   app.delete("/api/tables/:id", async (req, res) => {
@@ -74,11 +79,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.patch("/api/guests/:id", async (req, res) => {
-    const guest = await storage.updateGuest(req.params.id, req.body);
-    if (!guest) {
-      return res.status(404).json({ error: "Guest not found" });
+    try {
+      const validatedData = updateGuestSchema.parse(req.body);
+      
+      if (validatedData.tableId) {
+        const table = await storage.getTable(validatedData.tableId);
+        if (!table) {
+          return res.status(400).json({ error: "Invalid table ID" });
+        }
+      }
+      
+      const guest = await storage.updateGuest(req.params.id, validatedData);
+      if (!guest) {
+        return res.status(404).json({ error: "Guest not found" });
+      }
+      res.json(guest);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid guest data" });
     }
-    res.json(guest);
   });
 
   app.delete("/api/guests/:id", async (req, res) => {
