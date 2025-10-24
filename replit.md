@@ -124,6 +124,13 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 24, 2025)
 
+### Rhodes Island Logo Integration
+- Replaced generic shield icon with authentic Rhodes Island logo from Arknights game
+- Downloaded official transparent PNG logo and integrated throughout application
+- Logo appears in faction badges, search autocomplete, modal dialogs, and admin interface
+
+
+
 ### Map Redesign - Landscape Layout with Radar Animations
 - Redesigned interactive map to landscape format (16:10 aspect ratio)
 - Replaced circular command region layout with spread-out faction positioning
