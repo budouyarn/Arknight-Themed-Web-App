@@ -152,6 +152,14 @@ Preferred communication style: Simple, everyday language.
 - Table reference validation ensures referential integrity
 - All mutations include error handlers with user-facing toast notifications
 
+### Search Autocomplete Feature
+- Added autocomplete dropdown to search bar showing up to 8 guest name suggestions
+- Each suggestion displays guest name, faction badge, and assigned table
+- Keyboard navigation support (Arrow keys, Enter to select, Escape to close)
+- Click-to-select functionality for suggestions
+- Click outside dropdown to close
+- Removed search results section below map to simplify UI - guests now find their table only through autocomplete suggestions
+
 ### UI/UX Improvements
 - Loading states for all data fetching operations
 - Toast notifications for all CRUD operations (success and error cases)
