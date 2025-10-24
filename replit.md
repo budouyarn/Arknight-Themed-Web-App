@@ -171,7 +171,8 @@ Preferred communication style: Simple, everyday language.
   - Guests positioned around the circle with numbered seats (1, 2, 3, etc.)
   - Each guest card shows name and faction badge with Arknights-style angular corners
   - Automatic positioning based on number of guests
-- Removed static search results and selected region info boxes for cleaner interface
+- Removed faction filter buttons for cleaner search interface
+- Search now only supports guest name search with autocomplete suggestions
 
 ### UI/UX Improvements
 - Loading states for all data fetching operations

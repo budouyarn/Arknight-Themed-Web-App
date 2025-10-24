@@ -14,10 +14,10 @@ import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFactions, setSelectedFactions] = useState<Faction[]>([]);
   const [highlightedTableId, setHighlightedTableId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogFaction, setDialogFaction] = useState<Faction | null>(null);
+  const [selectedFaction, setSelectedFaction] = useState<Faction | null>(null);
 
   const { data: tables = [], isLoading: tablesLoading } = useQuery<Table[]>({
     queryKey: ["/api/tables"],
@@ -26,20 +26,6 @@ export default function Home() {
   const { data: guests = [], isLoading: guestsLoading } = useQuery<Guest[]>({
     queryKey: ["/api/guests"],
   });
-
-  const handleFactionToggle = (faction: Faction) => {
-    setSelectedFactions(prev =>
-      prev.includes(faction)
-        ? prev.filter(f => f !== faction)
-        : [...prev, faction]
-    );
-  };
-
-  const handleClearAll = () => {
-    setSearchQuery('');
-    setSelectedFactions([]);
-    setHighlightedTableId(null);
-  };
 
   const handleTableClick = (tableId: string) => {
     setHighlightedTableId(tableId);
@@ -60,7 +46,7 @@ export default function Home() {
   }, [tables, guests]);
 
   const handleMapFactionSelect = (faction: Faction) => {
-    setSelectedFactions([faction]);
+    setSelectedFaction(faction);
     setDialogFaction(faction);
     setDialogOpen(true);
   };
@@ -68,7 +54,7 @@ export default function Home() {
   const handleDialogClose = (open: boolean) => {
     setDialogOpen(open);
     if (!open) {
-      setSelectedFactions([]);
+      setSelectedFaction(null);
     }
   };
 
@@ -105,9 +91,6 @@ export default function Home() {
           <SearchBar
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
-            selectedFactions={selectedFactions}
-            onFactionToggle={handleFactionToggle}
-            onClearAll={handleClearAll}
             guests={guests}
             tables={tables}
           />
@@ -134,7 +117,7 @@ export default function Home() {
               <InteractiveTerraMap
                 tables={tables}
                 guestCounts={guestCounts}
-                selectedFaction={selectedFactions[0] || null}
+                selectedFaction={selectedFaction}
                 onFactionSelect={handleMapFactionSelect}
               />
             </div>
