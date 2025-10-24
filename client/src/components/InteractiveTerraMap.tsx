@@ -185,7 +185,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
 
                         <button
                           onClick={() => handleRegionClick(faction)}
-                          className="group relative z-10 w-48"
+                          className="faction-region group relative z-10 w-48"
                           data-testid={`button-map-region-${faction.toLowerCase().replace(/\s+/g, '-')}`}
                         >
                           <div
