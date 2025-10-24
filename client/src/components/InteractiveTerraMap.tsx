@@ -4,7 +4,7 @@ import { Users, MapPin } from "lucide-react";
 import FactionBadge from "./FactionBadge";
 import type { Table, Faction } from "@shared/schema";
 import { Shield, Star, Users as UsersIcon, Globe, Sword, Crown, Sun, Flame, Mountain, Sparkles } from "lucide-react";
-import terraMapBg from '@assets/Screenshot 2025-10-24 194118_1761306125011.png';
+import terraMapBg from '@assets/generated_images/Terra_map_background_white_4b255bfe.png';
 import { useState, useEffect } from "react";
 
 interface InteractiveTerraMapProps {
@@ -59,16 +59,16 @@ type FactionPosition = {
 };
 
 const factionPositions: Record<Faction, FactionPosition> = {
-  "Rhodes Island": { left: "50%", top: "40%" },
-  "Lungmen": { left: "65%", top: "25%" },
-  "Yan": { left: "85%", top: "30%" },
-  "Victoria": { left: "42%", top: "48%" },
-  "Kazimierz": { left: "40%", top: "28%" },
-  "Ursus": { left: "58%", top: "18%" },
-  "Laterano": { left: "60%", top: "60%" },
-  "Siesta": { left: "35%", top: "58%" },
-  "Bolivar": { left: "18%", top: "32%" },
-  "Sargon": { left: "22%", top: "65%" },
+  "Rhodes Island": { left: "50%", top: "50%" },
+  "Lungmen": { left: "75%", top: "40%" },
+  "Yan": { left: "80%", top: "55%" },
+  "Victoria": { left: "15%", top: "35%" },
+  "Kazimierz": { left: "20%", top: "55%" },
+  "Ursus": { left: "45%", top: "15%" },
+  "Laterano": { left: "65%", top: "70%" },
+  "Siesta": { left: "35%", top: "75%" },
+  "Bolivar": { left: "15%", top: "70%" },
+  "Sargon": { left: "85%", top: "25%" },
 };
 
 const factionAnimationDelays: Record<Faction, [number, number]> = {
@@ -129,13 +129,46 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
 
   return (
     <div className="relative">
-      <div className="relative overflow-hidden rounded-lg bg-slate-700 p-8">
+      <div className="relative overflow-hidden rounded-lg border-2 border-primary/20 bg-gradient-to-br from-background to-muted/30 p-8">
         <div 
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: `url(${terraMapBg})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+          }}
+        />
+        
+        <div 
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 2px,
+              hsl(var(--foreground) / 0.1) 2px,
+              hsl(var(--foreground) / 0.1) 4px
+            ),
+            repeating-linear-gradient(
+              90deg,
+              transparent,
+              transparent 2px,
+              hsl(var(--foreground) / 0.1) 2px,
+              hsl(var(--foreground) / 0.1) 4px
+            )`
+          }}
+        />
+
+        <div 
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage: `repeating-conic-gradient(
+              from 0deg at 50% 50%,
+              transparent 0deg,
+              transparent 30deg,
+              hsl(var(--foreground) / 0.08) 30deg,
+              hsl(var(--foreground) / 0.08) 30.5deg
+            )`
           }}
         />
 
