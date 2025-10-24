@@ -100,7 +100,6 @@ export default function Home() {
 
           <TabsContent value="map" className="space-y-4" data-testid="content-map">
             <div className="mb-6">
-              <h2 className="font-display text-3xl font-bold text-foreground mb-4">Find Your Table</h2>
               <SearchBar
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
