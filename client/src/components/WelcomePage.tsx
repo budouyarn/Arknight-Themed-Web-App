@@ -78,9 +78,9 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
   }, [isDragging, sliderPosition]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background to-muted/30 flex items-center justify-center">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center">
       <div 
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-5"
         style={{
           backgroundImage: `url(${terraMapBg})`,
           backgroundSize: 'cover',
@@ -95,8 +95,8 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
             0deg,
             transparent,
             transparent 2px,
-            hsl(var(--foreground) / 0.1) 2px,
-            hsl(var(--foreground) / 0.1) 4px
+            rgba(255, 255, 255, 0.05) 2px,
+            rgba(255, 255, 255, 0.05) 4px
           )`
         }}
       />
@@ -104,21 +104,21 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="text-center space-y-6">
           <div className="inline-block">
-            <h1 className="font-brand text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground tracking-tight" data-testid="text-title">
+            <h1 className="font-brand text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight" data-testid="text-title">
               Leandro Kim and Sherine Lim
             </h1>
             <div className="h-1 bg-primary mt-3" style={{ clipPath: "polygon(0 0, calc(100% - 8px) 0, 100% 100%, 0 100%)" }} />
           </div>
           
-          <p className="font-display text-3xl sm:text-4xl font-semibold text-foreground/90" data-testid="text-date">
+          <p className="font-display text-3xl sm:text-4xl font-semibold text-gray-100" data-testid="text-date">
             December 7, 2024
           </p>
           
-          <p className="font-display text-xl sm:text-2xl text-muted-foreground max-w-3xl mx-auto mt-8">
+          <p className="font-display text-xl sm:text-2xl text-gray-300 max-w-3xl mx-auto mt-8">
             Welcome, Operators. Locate your designated table for the celebration.
           </p>
           
-          <div className="flex items-center justify-center gap-2 text-base text-muted-foreground font-sans mt-6">
+          <div className="flex items-center justify-center gap-2 text-base text-gray-400 font-sans mt-6">
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             <span>50 Operators Deployed</span>
           </div>
@@ -128,11 +128,11 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
       <div className="fixed bottom-8 right-8 w-80">
         <div
           ref={sliderRef}
-          className="relative h-16 bg-card/80 backdrop-blur-sm border-2 border-primary/30 rounded-md overflow-hidden shadow-xl"
+          className="relative h-16 bg-gray-800/90 backdrop-blur-sm border-2 border-gray-700 rounded-md overflow-hidden shadow-xl"
           data-testid="slider-enter"
         >
           <div 
-            className="absolute inset-0 bg-primary/10 transition-all duration-300"
+            className="absolute inset-0 bg-primary/20 transition-all duration-300"
             style={{ 
               width: `${sliderPosition}px`,
               clipPath: "polygon(0 0, calc(100% - 6px) 0, 100% 100%, 0 100%)"
@@ -140,10 +140,10 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
           />
           
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="font-display text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            <span className="font-display text-sm font-semibold text-gray-300 uppercase tracking-wider">
               Slide to Enter
             </span>
-            <ChevronRight className="w-5 h-5 ml-2 text-muted-foreground animate-pulse" />
+            <ChevronRight className="w-5 h-5 ml-2 text-gray-300 animate-pulse" />
           </div>
 
           <div
@@ -157,7 +157,7 @@ export default function WelcomePage({ onEnter }: WelcomePageProps) {
             onTouchStart={(e) => handleStart(e.touches[0].clientX)}
             data-testid="slider-thumb"
           >
-            <ChevronRight className="w-6 h-6 text-primary-foreground group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform" />
           </div>
         </div>
       </div>
