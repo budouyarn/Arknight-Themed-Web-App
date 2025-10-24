@@ -86,16 +86,40 @@ Preferred communication style: Simple, everyday language.
 
 ### Authentication and Authorization
 
-**Planned Authentication**
-- User schema defined with username/password fields
-- Express session management prepared (connect-pg-simple for session storage)
-- No active authentication implementation in current codebase
-- Storage interface includes getUserByUsername and createUser methods
+**Owner-Only Authentication System**
+- Passport-local strategy with session-based authentication
+- Memorystore for session storage during development
+- Password hashing using scrypt with salt for security
+- First-time setup flow allows creating single owner account
+- Registration automatically disabled after first account creation
 
-**Security Considerations**
+**Authentication Flow**
+1. First visit to /admin redirects to /setup if no users exist
+2. Owner creates account via secure setup page
+3. Subsequent visits to /admin redirect to /login
+4. Protected routes require authentication
+5. Admin dashboard includes logout functionality
+
+**Security Implementation**
+- Scrypt password hashing with random salt (16 bytes)
+- Session-based authentication with SESSION_SECRET environment variable
 - CORS and credential handling configured in API client
-- Password field present in schema (should be hashed in production)
-- Session-based auth pattern prepared but not implemented
+- All admin routes (POST/PATCH/DELETE) protected with requireAuth middleware
+- Only one owner account allowed (enforced at registration endpoint)
+
+**Protected Endpoints**
+- POST /api/tables (requires auth)
+- PATCH /api/tables/:id (requires auth)
+- DELETE /api/tables/:id (requires auth)
+- POST /api/guests (requires auth)
+- PATCH /api/guests/:id (requires auth)
+- DELETE /api/guests/:id (requires auth)
+
+**Public Endpoints**
+- GET /api/tables (read-only for guests)
+- GET /api/guests (read-only for guests)
+- GET /api/tables/:id (read-only)
+- GET /api/tables/:tableId/guests (read-only)
 
 ### Design System Architecture
 
@@ -123,6 +147,16 @@ Preferred communication style: Simple, everyday language.
 - Radar pulse animations with stable timing for each faction region (all in grey)
 
 ## Recent Changes (October 24, 2025)
+
+### Owner-Only Authentication Implementation
+- Created secure authentication system using Passport.js with local strategy
+- Implemented first-time setup page (/setup) for owner account creation
+- Added login page (/login) for subsequent authentication
+- Protected all admin routes with authentication middleware
+- Only one owner account allowed (registration disabled after first account)
+- Admin dashboard includes logout button and navigation to home
+- Session-based authentication with password hashing (scrypt with salt)
+- All mutation endpoints (POST/PATCH/DELETE) require authentication
 
 ### Map Redesign - Landscape Layout with Radar Animations
 - Redesigned interactive map to landscape format (16:10 aspect ratio)
@@ -194,6 +228,13 @@ Preferred communication style: Simple, everyday language.
 - @neondatabase/serverless for Neon PostgreSQL connection
 - drizzle-zod for schema validation
 - connect-pg-simple for PostgreSQL session storage
+
+**Authentication**
+- passport for authentication middleware
+- passport-local for username/password authentication
+- express-session for session management
+- memorystore for in-memory session storage
+- Node.js crypto (scrypt) for password hashing
 
 **UI Component Libraries**
 - @radix-ui/* packages (30+ components for accessible UI primitives)

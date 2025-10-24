@@ -2,9 +2,19 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertGuestSchema, insertTableSchema, updateGuestSchema, updateTableSchema } from "@shared/schema";
+import { setupAuth } from "./auth";
+
+function requireAuth(req: any, res: any, next: any) {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  next();
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Tables routes
+  setupAuth(app);
+  
+  // Public routes (read-only for guests)
   app.get("/api/tables", async (req, res) => {
     const tables = await storage.getAllTables();
     res.json(tables);
@@ -18,7 +28,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(table);
   });
 
-  app.post("/api/tables", async (req, res) => {
+  app.post("/api/tables", requireAuth, async (req, res) => {
     try {
       const validatedData = insertTableSchema.parse(req.body);
       const table = await storage.createTable(validatedData);
@@ -28,7 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/tables/:id", async (req, res) => {
+  app.patch("/api/tables/:id", requireAuth, async (req, res) => {
     try {
       const validatedData = updateTableSchema.parse(req.body);
       const table = await storage.updateTable(req.params.id, validatedData);
@@ -41,7 +51,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/tables/:id", async (req, res) => {
+  app.delete("/api/tables/:id", requireAuth, async (req, res) => {
     const success = await storage.deleteTable(req.params.id);
     if (!success) {
       return res.status(404).json({ error: "Table not found" });
@@ -68,7 +78,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(guests);
   });
 
-  app.post("/api/guests", async (req, res) => {
+  app.post("/api/guests", requireAuth, async (req, res) => {
     try {
       const validatedData = insertGuestSchema.parse(req.body);
       const guest = await storage.createGuest(validatedData);
@@ -78,7 +88,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.patch("/api/guests/:id", async (req, res) => {
+  app.patch("/api/guests/:id", requireAuth, async (req, res) => {
     try {
       const validatedData = updateGuestSchema.parse(req.body);
       
@@ -99,7 +109,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/guests/:id", async (req, res) => {
+  app.delete("/api/guests/:id", requireAuth, async (req, res) => {
     const success = await storage.deleteGuest(req.params.id);
     if (!success) {
       return res.status(404).json({ error: "Guest not found" });
