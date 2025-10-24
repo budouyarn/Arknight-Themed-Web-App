@@ -131,16 +131,6 @@ Preferred communication style: Simple, everyday language.
 - Animation timing creates wave effect across regions for visual appeal
 - Factions spread across map positions: center, northeast, east, northwest, west, north, southeast, south, southwest, far east
 
-### Terminal Animation Effects
-- Implemented typewriter animation for "PRTS SYNTHESIZE INFORMATION ANALYSIS" text at 60ms per character
-- Added continuous blinking cursor effect during and after typewriter animation
-- Created terminal shutdown animation that triggers 45 seconds after page load
-- Terminal-off effect simulates CRT monitor shutdown with:
-  - Flickering brightness changes
-  - Vertical collapse effect (scaleY transformation)
-  - Smooth fade to black over 1.5 seconds
-- Optimized cursor interval to stop when terminal shuts down (prevents needless re-renders)
-
 ### Admin Interface Implementation
 - Created comprehensive admin page at /admin for managing seating arrangements
 - Table-organized view showing all guests grouped by their assigned tables
