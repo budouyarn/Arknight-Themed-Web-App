@@ -352,4 +352,10 @@
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
   }
+
+  .bg-grid-pattern {
+    background-image: 
+      repeating-linear-gradient(0deg, transparent, transparent 10px, currentColor 10px, currentColor 11px),
+      repeating-linear-gradient(90deg, transparent, transparent 10px, currentColor 10px, currentColor 11px);
+  }
 }
