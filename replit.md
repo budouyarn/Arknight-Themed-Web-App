@@ -116,7 +116,6 @@ Preferred communication style: Simple, everyday language.
 - Geometric grid overlays for tech aesthetic
 - Badge system for faction identification with custom colors and icons
 - Search and filter UI with real-time updates
-- Top-left corner info panel displays "PRTS SYNTHESIZE INFORMATION ANALYSIS" with typewriter animation effect and continuous blinking cursor
 - Spread-out faction positioning across 16:10 landscape map
 - Radar pulse animations with stable timing for each faction region
 
