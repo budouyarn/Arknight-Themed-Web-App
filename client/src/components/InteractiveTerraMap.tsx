@@ -229,8 +229,8 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                     clipPath: "polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px)"
                   }}
                 >
-                  <h2 className="font-brand font-bold text-2xl uppercase tracking-wide text-foreground mb-2">
-                    Terra Command
+                  <h2 className="font-brand font-bold text-xl uppercase tracking-wide text-foreground mb-2">
+                    PRTS SYNTHESIZE INFORMATION ANALYSIS
                   </h2>
                   <p className="text-sm text-muted-foreground font-display">
                     Wedding Seating Plan
