@@ -148,12 +148,24 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 24, 2025)
 
+### Navigation Redesign
+- Replaced tab navigation with menu modal dialog system
+- Menu button opens modal with view selection options
+- Two available views: "Table Map" (interactive faction-based map) and "Guest List" (all guests by table)
+- Current view persists while menu is closed
+- Menu dialog displays descriptive text for each view option
+
 ### Welcome Page Implementation
 - Converted header into full-screen welcome page
-- Added "Enter" button on bottom right to access main seating interface
+- Replaced "Enter" button with interactive "Slide to Enter" slider
+- Welcome page uses dark grey gradient theme (gray-900 to gray-800)
+- Slider thumb styled in white with grey hover state
 - Welcome page displays couple's names, wedding date, and welcome message
-- Search bar and "Find Your Table" heading now only appear on Interactive Map tab
-- Removed Grid Layout view, keeping only Interactive Map and Guest List tabs
+
+### Search Interface Improvements
+- Search bar positioned in left corner with reduced width (max-w-md)
+- Search bar only visible on Table Map view
+- Removed "Find Your Table" heading for cleaner interface
 
 ### Owner-Only Authentication Implementation
 - Created secure authentication system using Passport.js with local strategy
