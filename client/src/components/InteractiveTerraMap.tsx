@@ -138,39 +138,6 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
             backgroundPosition: 'center',
           }}
         />
-        
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              0deg,
-              transparent,
-              transparent 2px,
-              hsl(var(--foreground) / 0.1) 2px,
-              hsl(var(--foreground) / 0.1) 4px
-            ),
-            repeating-linear-gradient(
-              90deg,
-              transparent,
-              transparent 2px,
-              hsl(var(--foreground) / 0.1) 2px,
-              hsl(var(--foreground) / 0.1) 4px
-            )`
-          }}
-        />
-
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `repeating-conic-gradient(
-              from 0deg at 50% 50%,
-              transparent 0deg,
-              transparent 30deg,
-              hsl(var(--foreground) / 0.08) 30deg,
-              hsl(var(--foreground) / 0.08) 30.5deg
-            )`
-          }}
-        />
 
         <div className="relative flex items-center justify-center min-h-[700px]">
           <div className="relative w-full aspect-[16/10]">

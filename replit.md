@@ -113,7 +113,6 @@ Preferred communication style: Simple, everyday language.
 
 **Visual Design Elements**
 - Terra map background image at full opacity for clear visibility
-- Geometric grid overlays for tech aesthetic
 - Badge system for faction identification with custom colors and icons
 - Search and filter UI with real-time updates
 - Top-left corner text displays "PRTS SYNTHESIZE INFORMATION ANALYSIS" with typewriter animation effect and continuous blinking cursor (no background box)
