@@ -2,14 +2,13 @@ import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
-import TableGridCell from "@/components/TableGridCell";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
 import CircularTable from "@/components/CircularTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import FactionBadge from "@/components/FactionBadge";
-import { Map, Grid3x3, List } from "lucide-react";
+import { Map, List } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
@@ -34,9 +33,6 @@ export default function Home() {
   const getTableGuestCount = (tableId: string) => {
     return guests.filter(g => g.tableId === tableId).length;
   };
-
-  const gridRows = tables.length > 0 ? Math.max(...tables.map(t => t.gridY)) + 1 : 0;
-  const gridCols = tables.length > 0 ? Math.max(...tables.map(t => t.gridX)) + 1 : 0;
 
   const guestCounts = useMemo(() => {
     return tables.reduce((acc, table) => {
@@ -97,14 +93,10 @@ export default function Home() {
         </div>
 
         <Tabs defaultValue="map" className="space-y-6" data-testid="view-tabs">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3" data-testid="tabs-list">
+          <TabsList className="grid w-full max-w-md mx-auto grid-cols-2" data-testid="tabs-list">
             <TabsTrigger value="map" data-testid="tab-map">
               <Map className="w-4 h-4 mr-2" />
               Interactive Map
-            </TabsTrigger>
-            <TabsTrigger value="grid" data-testid="tab-grid">
-              <Grid3x3 className="w-4 h-4 mr-2" />
-              Grid Layout
             </TabsTrigger>
             <TabsTrigger value="list" data-testid="tab-list">
               <List className="w-4 h-4 mr-2" />
@@ -120,34 +112,6 @@ export default function Home() {
                 selectedFaction={selectedFaction}
                 onFactionSelect={handleMapFactionSelect}
               />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="grid" data-testid="content-grid">
-            <div 
-              className="grid gap-4 max-w-4xl mx-auto"
-              style={{
-                gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
-                gridTemplateRows: `repeat(${gridRows}, minmax(0, 1fr))`
-              }}
-            >
-              {tables.map((table) => (
-                <div
-                  key={table.id}
-                  id={`table-${table.id}`}
-                  style={{
-                    gridColumn: table.gridX + 1,
-                    gridRow: table.gridY + 1
-                  }}
-                >
-                  <TableGridCell
-                    table={table}
-                    guestCount={getTableGuestCount(table.id)}
-                    isHighlighted={highlightedTableId === table.id}
-                    onClick={() => handleTableClick(table.id)}
-                  />
-                </div>
-              ))}
             </div>
           </TabsContent>
 
