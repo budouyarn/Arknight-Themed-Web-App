@@ -88,7 +88,6 @@ function TypewriterText({ text, speed = 50 }: { text: string; speed?: number }) 
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
-  const [terminalOff, setTerminalOff] = useState(false);
 
   useEffect(() => {
     if (currentIndex < text.length) {
@@ -101,28 +100,11 @@ function TypewriterText({ text, speed = 50 }: { text: string; speed?: number }) 
   }, [currentIndex, text, speed]);
 
   useEffect(() => {
-    if (!terminalOff) {
-      const cursorInterval = setInterval(() => {
-        setShowCursor(prev => !prev);
-      }, 500);
-      return () => clearInterval(cursorInterval);
-    }
-  }, [terminalOff]);
-
-  useEffect(() => {
-    const shutdownTimer = setTimeout(() => {
-      setTerminalOff(true);
-    }, 45000);
-    return () => clearTimeout(shutdownTimer);
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
   }, []);
-
-  if (terminalOff) {
-    return (
-      <span className="inline-block animate-terminal-off">
-        {displayText}
-      </span>
-    );
-  }
 
   return (
     <>
