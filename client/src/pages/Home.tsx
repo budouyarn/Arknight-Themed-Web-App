@@ -99,7 +99,7 @@ export default function Home() {
           </TabsList>
 
           <TabsContent value="map" className="space-y-4" data-testid="content-map">
-            <div className="mb-6">
+            <div className="mb-6 max-w-md">
               <SearchBar
                 searchQuery={searchQuery}
                 onSearchChange={setSearchQuery}
