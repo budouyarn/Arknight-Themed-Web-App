@@ -266,7 +266,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                   );
                 })}
 
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center p-6 bg-card/80 backdrop-blur-md rounded-lg border-2 border-primary/40"
+                <div className="absolute top-4 left-4 p-6 bg-card/80 backdrop-blur-md rounded-lg border-2 border-primary/40"
                   style={{
                     clipPath: "polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px)"
                   }}
