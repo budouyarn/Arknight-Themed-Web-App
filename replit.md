@@ -161,7 +161,11 @@ Preferred communication style: Simple, everyday language.
 - Click-to-select functionality for suggestions
 - Click outside dropdown to close
 - Faction region click opens modal dialog showing all guests seated at that table
-- Modal displays faction badge, table name, guest count, and complete guest list
+- Modal displays circular table visualization with:
+  - Round table center showing table name and total seat count
+  - Guests positioned around the circle with numbered seats (1, 2, 3, etc.)
+  - Each guest card shows name and faction badge with Arknights-style angular corners
+  - Automatic positioning based on number of guests
 - Removed static search results and selected region info boxes for cleaner interface
 
 ### UI/UX Improvements

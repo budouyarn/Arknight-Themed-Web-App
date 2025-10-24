@@ -4,11 +4,12 @@ import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
 import TableGridCell from "@/components/TableGridCell";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
+import CircularTable from "@/components/CircularTable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import FactionBadge from "@/components/FactionBadge";
-import { Map, Grid3x3, List, Users } from "lucide-react";
+import { Map, Grid3x3, List } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
@@ -193,7 +194,7 @@ export default function Home() {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto" data-testid="faction-dialog">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" data-testid="faction-dialog">
           {dialogFaction && (
             <>
               <DialogHeader>
@@ -202,36 +203,15 @@ export default function Home() {
                   {dialogFaction}
                 </DialogTitle>
                 <DialogDescription className="font-display text-base">
-                  View all guests seated at this table
+                  Seating arrangement for this table
                 </DialogDescription>
               </DialogHeader>
               
               <div className="mt-6">
-                <div className="flex items-center gap-2 mb-4 text-muted-foreground">
-                  <Users className="w-5 h-5" />
-                  <span className="font-display font-semibold">
-                    {getGuestsForFaction(dialogFaction).length} {getGuestsForFaction(dialogFaction).length === 1 ? 'Guest' : 'Guests'}
-                  </span>
-                </div>
-                
-                <div className="space-y-2">
-                  {getGuestsForFaction(dialogFaction).map((guest) => (
-                    <div
-                      key={guest.id}
-                      className="flex items-center justify-between p-3 rounded-md bg-muted/50 hover-elevate active-elevate-2 transition-colors"
-                      data-testid={`dialog-guest-${guest.id}`}
-                    >
-                      <span className="font-display font-medium text-foreground">{guest.name}</span>
-                      <FactionBadge faction={guest.faction as Faction} />
-                    </div>
-                  ))}
-                  
-                  {getGuestsForFaction(dialogFaction).length === 0 && (
-                    <div className="text-center py-8 text-muted-foreground">
-                      No guests assigned to this table yet.
-                    </div>
-                  )}
-                </div>
+                <CircularTable 
+                  guests={getGuestsForFaction(dialogFaction)} 
+                  tableName={dialogFaction}
+                />
               </div>
             </>
           )}
