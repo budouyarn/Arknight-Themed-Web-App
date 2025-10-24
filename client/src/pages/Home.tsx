@@ -2,7 +2,6 @@ import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/Header";
 import SearchBar from "@/components/SearchBar";
-import GuestCard from "@/components/GuestCard";
 import TableGridCell from "@/components/TableGridCell";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -24,14 +23,6 @@ export default function Home() {
     queryKey: ["/api/guests"],
   });
 
-  const filteredGuests = useMemo(() => {
-    return guests.filter((guest) => {
-      const matchesSearch = guest.name.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesFaction = selectedFactions.length === 0 || selectedFactions.includes(guest.faction as Faction);
-      return matchesSearch && matchesFaction;
-    });
-  }, [searchQuery, selectedFactions, guests]);
-
   const handleFactionToggle = (faction: Faction) => {
     setSelectedFactions(prev =>
       prev.includes(faction)
@@ -44,14 +35,6 @@ export default function Home() {
     setSearchQuery('');
     setSelectedFactions([]);
     setHighlightedTableId(null);
-  };
-
-  const handleGuestClick = (tableId: string) => {
-    setHighlightedTableId(tableId);
-    const element = document.getElementById(`table-${tableId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
   };
 
   const handleTableClick = (tableId: string) => {
@@ -140,32 +123,6 @@ export default function Home() {
                 onFactionSelect={handleMapFactionSelect}
               />
             </div>
-
-            {filteredGuests.length > 0 && (
-              <div className="mt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-display text-lg font-semibold text-foreground">
-                    Search Results
-                  </h3>
-                  <span className="text-sm text-muted-foreground font-sans">
-                    {filteredGuests.length} of {guests.length}
-                  </span>
-                </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-                  {filteredGuests.map((guest) => {
-                    const table = tables.find(t => t.id === guest.tableId)!;
-                    return (
-                      <GuestCard
-                        key={guest.id}
-                        guest={guest}
-                        table={table}
-                        onClick={() => handleGuestClick(guest.tableId)}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </TabsContent>
 
           <TabsContent value="grid" data-testid="content-grid">
