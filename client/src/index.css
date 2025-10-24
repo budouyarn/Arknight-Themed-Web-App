@@ -381,4 +381,8 @@
     height: 40px;
     transform: translate(-50%, -50%);
   }
+
+  .group\/region:hover .animate-radar-ping {
+    background-color: rgba(185, 28, 28, 0.4) !important;
+  }
 }

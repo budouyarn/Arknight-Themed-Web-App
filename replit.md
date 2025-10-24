@@ -134,6 +134,7 @@ Preferred communication style: Simple, everyday language.
 - Factions spread across map positions: center, northeast, east, northwest, west, north, southeast, south, southwest, far east
 - Custom Rhodes Island icon component featuring Arknights-inspired geometric crystal design
 - Faction regions show maroon red (red-900 to red-950) hover effect for visual feedback
+- Radar pulse animations turn red when hovering over faction regions
 - Selected faction regions display in dark red (red-800 to red-900 gradient) with red ring and pulsing border
 - Clicking a faction turns it dark red while the modal is open, clearing selection on modal close
 
