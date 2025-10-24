@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 * {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><polygon points='10,2 18,18 2,18' fill='%23000000' /></svg>") 10 10, auto;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><polygon points='10,4 19,16 1,16' fill='%23000000' /></svg>") 10 10, auto;
 }
 
 .faction-region:hover,
 .faction-region:hover * {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><polygon points='10,2 18,18 2,18' fill='%23ffffff' /></svg>") 10 10, auto !important;
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><polygon points='10,4 19,16 1,16' fill='%23ffffff' /></svg>") 10 10, auto !important;
 }
 
 /* LIGHT MODE */
