@@ -247,7 +247,7 @@ export default function Home() {
             data-testid="chat-window"
           >
             {/* Chat Header */}
-            <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-3 rounded-t-lg flex items-center justify-between">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-400 text-white px-4 py-3 rounded-t-lg flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
                   <Heart className="w-5 h-5 fill-white" />
@@ -273,7 +273,7 @@ export default function Home() {
               <div className="flex flex-col gap-3">
                 {/* Message Bubble */}
                 <div className="flex gap-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex-shrink-0 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 flex-shrink-0 flex items-center justify-center">
                     <Heart className="w-4 h-4 text-white fill-white" />
                   </div>
                   <div className="flex-1">
@@ -287,7 +287,7 @@ export default function Home() {
                 </div>
 
                 <div className="flex gap-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex-shrink-0 flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 flex-shrink-0 flex items-center justify-center">
                     <Heart className="w-4 h-4 text-white fill-white" />
                   </div>
                   <div className="flex-1">
@@ -310,7 +310,7 @@ export default function Home() {
             setChatOpen(!chatOpen);
             setShowChatBadge(false);
           }}
-          className="w-16 h-16 rounded-full bg-gray-700 hover:bg-gray-600 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center relative"
+          className="w-16 h-16 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 hover:from-green-600 hover:to-emerald-500 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center relative"
           data-testid="button-chat-toggle"
         >
           <Heart className="w-8 h-8 text-white fill-white" />
