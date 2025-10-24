@@ -97,18 +97,19 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Menu Button - Top Right */}
+      <div className="fixed top-6 right-6 z-40">
+        <Button 
+          variant="outline" 
+          onClick={() => setMenuOpen(true)}
+          data-testid="button-menu"
+        >
+          <Menu className="w-4 h-4 mr-2" />
+          Menu
+        </Button>
+      </div>
+
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Menu Button */}
-        <div className="mb-6">
-          <Button 
-            variant="outline" 
-            onClick={() => setMenuOpen(true)}
-            data-testid="button-menu"
-          >
-            <Menu className="w-4 h-4 mr-2" />
-            Menu
-          </Button>
-        </div>
 
         {/* Table Map View */}
         {currentView === "map" && (
