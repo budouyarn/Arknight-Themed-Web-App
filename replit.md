@@ -32,8 +32,8 @@ The design system uses CSS custom properties for theming (light/dark mode suppor
 
 **Layout Design:**
 - Background color: Grey-white (96% lightness) for a soft, neutral appearance
-- Table Map View: Full-screen layout utilizing the entire viewport with search bar fixed in top left and view navigation buttons fixed in top right
-- Guest List View: Centered container with maximum width for improved readability
+- Table Map View: Full-screen layout utilizing the entire viewport with view navigation buttons fixed in top right corner
+- Guest List View: Centered container with maximum width, featuring search bar at the top for guest/table filtering
 
 ## External Dependencies
 

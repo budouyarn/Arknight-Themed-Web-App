@@ -119,16 +119,6 @@ export default function Home() {
       {/* Table Map View - Full Screen */}
       {currentView === "map" && (
         <div className="fixed inset-0 flex flex-col" data-testid="content-map">
-          {/* Search Bar - Fixed Top Left */}
-          <div className="fixed top-6 left-6 z-40 max-w-md">
-            <SearchBar
-              searchQuery={searchQuery}
-              onSearchChange={setSearchQuery}
-              guests={guests}
-              tables={tables}
-            />
-          </div>
-
           {/* Full Screen Map */}
           <div className="w-full h-full">
             <InteractiveTerraMap
@@ -144,6 +134,16 @@ export default function Home() {
       {/* Guest List View */}
       {currentView === "list" && (
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8" data-testid="content-list">
+          {/* Search Bar */}
+          <div className="mb-6 max-w-md">
+            <SearchBar
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+              guests={guests}
+              tables={tables}
+            />
+          </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {tablesByGuest.map(({ table, guests: tableGuests }) => (
               <Card key={table.id} className="overflow-hidden" data-testid={`table-card-${table.id}`}>
