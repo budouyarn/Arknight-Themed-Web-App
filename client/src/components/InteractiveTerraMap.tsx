@@ -265,24 +265,6 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                     </div>
                   );
                 })}
-
-                <div className="absolute top-4 left-4 p-6 bg-card/80 backdrop-blur-md rounded-lg border-2 border-primary/40"
-                  style={{
-                    clipPath: "polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px)"
-                  }}
-                >
-                  <h2 className="font-brand font-bold text-xl uppercase tracking-wide text-foreground mb-2 min-h-[28px]">
-                    <TypewriterText text="PRTS SYNTHESIZE INFORMATION ANALYSIS" speed={60} />
-                  </h2>
-                  <p className="text-sm text-muted-foreground font-display">
-                    Wedding Seating Plan
-                  </p>
-                  <div className="mt-3 pt-3 border-t border-primary/30">
-                    <p className="text-xs text-muted-foreground">
-                      {tables.length} Tables • {Object.values(guestCounts).reduce((a, b) => a + b, 0)} Guests
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
