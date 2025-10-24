@@ -1,13 +1,93 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { insertGuestSchema, insertTableSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // put application routes here
-  // prefix all routes with /api
+  // Tables routes
+  app.get("/api/tables", async (req, res) => {
+    const tables = await storage.getAllTables();
+    res.json(tables);
+  });
 
-  // use storage to perform CRUD operations on the storage interface
-  // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
+  app.get("/api/tables/:id", async (req, res) => {
+    const table = await storage.getTable(req.params.id);
+    if (!table) {
+      return res.status(404).json({ error: "Table not found" });
+    }
+    res.json(table);
+  });
+
+  app.post("/api/tables", async (req, res) => {
+    try {
+      const validatedData = insertTableSchema.parse(req.body);
+      const table = await storage.createTable(validatedData);
+      res.status(201).json(table);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid table data" });
+    }
+  });
+
+  app.patch("/api/tables/:id", async (req, res) => {
+    const table = await storage.updateTable(req.params.id, req.body);
+    if (!table) {
+      return res.status(404).json({ error: "Table not found" });
+    }
+    res.json(table);
+  });
+
+  app.delete("/api/tables/:id", async (req, res) => {
+    const success = await storage.deleteTable(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: "Table not found" });
+    }
+    res.status(204).send();
+  });
+
+  // Guests routes
+  app.get("/api/guests", async (req, res) => {
+    const guests = await storage.getAllGuests();
+    res.json(guests);
+  });
+
+  app.get("/api/guests/:id", async (req, res) => {
+    const guest = await storage.getGuest(req.params.id);
+    if (!guest) {
+      return res.status(404).json({ error: "Guest not found" });
+    }
+    res.json(guest);
+  });
+
+  app.get("/api/tables/:tableId/guests", async (req, res) => {
+    const guests = await storage.getGuestsByTable(req.params.tableId);
+    res.json(guests);
+  });
+
+  app.post("/api/guests", async (req, res) => {
+    try {
+      const validatedData = insertGuestSchema.parse(req.body);
+      const guest = await storage.createGuest(validatedData);
+      res.status(201).json(guest);
+    } catch (error) {
+      res.status(400).json({ error: "Invalid guest data" });
+    }
+  });
+
+  app.patch("/api/guests/:id", async (req, res) => {
+    const guest = await storage.updateGuest(req.params.id, req.body);
+    if (!guest) {
+      return res.status(404).json({ error: "Guest not found" });
+    }
+    res.json(guest);
+  });
+
+  app.delete("/api/guests/:id", async (req, res) => {
+    const success = await storage.deleteGuest(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: "Guest not found" });
+    }
+    res.status(204).send();
+  });
 
   const httpServer = createServer(app);
 
