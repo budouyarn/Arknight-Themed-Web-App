@@ -118,8 +118,8 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
           }}
         />
 
-        <div className="relative flex items-center justify-center min-h-[800px]">
-          <div className="relative w-full max-w-6xl aspect-square">
+        <div className="relative flex items-center justify-center min-h-[600px]">
+          <div className="relative w-full aspect-[16/10]">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative w-full h-full">
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border-2 border-primary/30" 
