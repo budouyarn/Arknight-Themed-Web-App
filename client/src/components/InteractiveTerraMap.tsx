@@ -5,6 +5,7 @@ import FactionBadge from "./FactionBadge";
 import type { Table, Faction } from "@shared/schema";
 import { Shield, Star, Users as UsersIcon, Globe, Sword, Crown, Sun, Flame, Mountain, Sparkles } from "lucide-react";
 import terraMapBg from '@assets/generated_images/Terra_map_background_white_4b255bfe.png';
+import { useState, useEffect } from "react";
 
 interface InteractiveTerraMapProps {
   tables: Table[];
@@ -82,6 +83,38 @@ const factionAnimationDelays: Record<Faction, [number, number]> = {
   "Bolivar": [2.4, 1.2],
   "Sargon": [2.7, 1.5],
 };
+
+function TypewriterText({ text, speed = 50 }: { text: string; speed?: number }) {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, speed]);
+
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  return (
+    <>
+      {displayText}
+      {currentIndex < text.length && (
+        <span className="inline-block w-0.5 h-5 bg-primary ml-1 align-middle" style={{ opacity: showCursor ? 1 : 0 }} />
+      )}
+    </>
+  );
+}
 
 export default function InteractiveTerraMap({ tables, guestCounts, selectedFaction, onFactionSelect }: InteractiveTerraMapProps) {
   const factionTables = tables.reduce((acc, table) => {
@@ -240,8 +273,8 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                     clipPath: "polygon(12px 0, calc(100% - 12px) 0, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0 calc(100% - 12px), 0 12px)"
                   }}
                 >
-                  <h2 className="font-brand font-bold text-xl uppercase tracking-wide text-foreground mb-2">
-                    PRTS SYNTHESIZE INFORMATION ANALYSIS
+                  <h2 className="font-brand font-bold text-xl uppercase tracking-wide text-foreground mb-2 min-h-[28px]">
+                    <TypewriterText text="PRTS SYNTHESIZE INFORMATION ANALYSIS" speed={60} />
                   </h2>
                   <p className="text-sm text-muted-foreground font-display">
                     Wedding Seating Plan
