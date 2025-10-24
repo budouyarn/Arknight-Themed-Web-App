@@ -20,12 +20,13 @@ export default function Home() {
   const [selectedFaction, setSelectedFaction] = useState<Faction | null>(null);
   const [currentView, setCurrentView] = useState<"map" | "list">("map");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [showChatBadge, setShowChatBadge] = useState(false);
 
   useEffect(() => {
     if (hasEntered) {
       const timer = setTimeout(() => {
-        setShowNotification(true);
+        setShowChatBadge(true);
       }, 1000);
       return () => clearTimeout(timer);
     }
@@ -237,42 +238,89 @@ export default function Home() {
         </DialogContent>
       </Dialog>
 
-      {/* Couple's Notification */}
-      {showNotification && (
-        <div 
-          className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom-5 duration-500"
-          data-testid="notification-popup"
-        >
-          <Card className="w-80 shadow-lg border-2">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-red-500 fill-red-500" />
-                  <CardTitle className="font-brand text-lg">From the Couple</CardTitle>
+      {/* Chat Notification - Phone-like Interface */}
+      <div className="fixed bottom-6 right-6 z-50">
+        {/* Chat Window */}
+        {chatOpen && (
+          <div 
+            className="mb-4 w-96 bg-background rounded-lg shadow-2xl border-2 animate-in slide-in-from-bottom-5 duration-300"
+            data-testid="chat-window"
+          >
+            {/* Chat Header */}
+            <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-3 rounded-t-lg flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <Heart className="w-5 h-5 fill-white" />
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setShowNotification(false)}
-                  className="h-6 w-6"
-                  data-testid="button-close-notification"
-                >
-                  <X className="w-4 h-4" />
-                </Button>
+                <div>
+                  <div className="font-semibold text-sm">Leandro & Sherine</div>
+                  <div className="text-xs opacity-90">The Couple</div>
+                </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Thank you for joining us on our special day! We're thrilled to celebrate this moment with you. 
-                Please find your seat and enjoy the celebration.
-              </p>
-              <p className="text-sm font-semibold mt-3 text-foreground">
-                - Leandro & Sherine
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      )}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setChatOpen(false)}
+                className="h-8 w-8 text-white hover:bg-white/20"
+                data-testid="button-close-chat"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Chat Messages */}
+            <div className="p-4 h-64 overflow-y-auto bg-muted/30">
+              <div className="flex flex-col gap-3">
+                {/* Message Bubble */}
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex-shrink-0 flex items-center justify-center">
+                    <Heart className="w-4 h-4 text-white fill-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="bg-background rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border">
+                      <p className="text-sm leading-relaxed">
+                        Thank you for joining us on our special day! 🎉
+                      </p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 ml-2">Just now</div>
+                  </div>
+                </div>
+
+                <div className="flex gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-pink-500 flex-shrink-0 flex items-center justify-center">
+                    <Heart className="w-4 h-4 text-white fill-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="bg-background rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border">
+                      <p className="text-sm leading-relaxed">
+                        We're thrilled to celebrate this moment with you. Please find your seat and enjoy the celebration! 💕
+                      </p>
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 ml-2">Just now</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Chat Bubble Button */}
+        <button
+          onClick={() => {
+            setChatOpen(!chatOpen);
+            setShowChatBadge(false);
+          }}
+          className="w-16 h-16 rounded-full bg-gradient-to-br from-red-500 to-pink-500 shadow-lg hover:shadow-xl transition-all hover:scale-110 active:scale-95 flex items-center justify-center relative"
+          data-testid="button-chat-toggle"
+        >
+          <Heart className="w-8 h-8 text-white fill-white" />
+          {showChatBadge && !chatOpen && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-600 rounded-full flex items-center justify-center text-white text-xs font-bold animate-pulse">
+              1
+            </span>
+          )}
+        </button>
+      </div>
     </div>
   );
 }

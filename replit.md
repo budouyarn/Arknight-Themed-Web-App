@@ -167,12 +167,18 @@ Preferred communication style: Simple, everyday language.
 - Search bar only visible on Table Map view
 - Removed "Find Your Table" heading for cleaner interface
 
-### Couple's Notification Popup
-- Added notification popup in bottom right corner with message from the couple
+### Couple's Notification - Live Chat Interface
+- Phone-style chat interface in bottom right corner with floating heart button
+- Chat bubble button shows notification badge (number "1") when new message arrives
+- Clicking bubble opens chat window with gradient header (red to pink)
+- Chat window displays messages from couple in messaging app style with:
+  - Profile avatars with heart icons
+  - Message bubbles with rounded corners
+  - Timestamp indicators ("Just now")
+  - Welcome messages with emojis
 - Appears automatically 1 second after entering the main interface
-- Features heart icon and personal message from Leandro & Sherine
-- Includes close button for dismissal
-- Animated slide-in effect from bottom
+- Chat can be opened/closed by clicking the floating heart button
+- Smooth animations for chat window expansion/collapse
 
 ### Owner-Only Authentication Implementation
 - Created secure authentication system using Passport.js with local strategy
