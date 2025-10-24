@@ -6,14 +6,17 @@ import TableGridCell from "@/components/TableGridCell";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import FactionBadge from "@/components/FactionBadge";
-import { Map, Grid3x3, List } from "lucide-react";
+import { Map, Grid3x3, List, Users } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFactions, setSelectedFactions] = useState<Faction[]>([]);
   const [highlightedTableId, setHighlightedTableId] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogFaction, setDialogFaction] = useState<Faction | null>(null);
 
   const { data: tables = [], isLoading: tablesLoading } = useQuery<Table[]>({
     queryKey: ["/api/tables"],
@@ -56,11 +59,14 @@ export default function Home() {
   }, [tables, guests]);
 
   const handleMapFactionSelect = (faction: Faction) => {
-    if (selectedFactions.includes(faction)) {
-      setSelectedFactions([]);
-    } else {
-      setSelectedFactions([faction]);
-    }
+    setDialogFaction(faction);
+    setDialogOpen(true);
+  };
+
+  const getGuestsForFaction = (faction: Faction) => {
+    const table = tables.find(t => t.name === faction);
+    if (!table) return [];
+    return guests.filter(g => g.tableId === table.id);
   };
 
   const tablesByGuest = useMemo(() => {
@@ -185,6 +191,52 @@ export default function Home() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto" data-testid="faction-dialog">
+          {dialogFaction && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="font-brand text-2xl uppercase tracking-wide flex items-center gap-3">
+                  <FactionBadge faction={dialogFaction} />
+                  {dialogFaction}
+                </DialogTitle>
+                <DialogDescription className="font-display text-base">
+                  View all guests seated at this table
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="mt-6">
+                <div className="flex items-center gap-2 mb-4 text-muted-foreground">
+                  <Users className="w-5 h-5" />
+                  <span className="font-display font-semibold">
+                    {getGuestsForFaction(dialogFaction).length} {getGuestsForFaction(dialogFaction).length === 1 ? 'Guest' : 'Guests'}
+                  </span>
+                </div>
+                
+                <div className="space-y-2">
+                  {getGuestsForFaction(dialogFaction).map((guest) => (
+                    <div
+                      key={guest.id}
+                      className="flex items-center justify-between p-3 rounded-md bg-muted/50 hover-elevate active-elevate-2 transition-colors"
+                      data-testid={`dialog-guest-${guest.id}`}
+                    >
+                      <span className="font-display font-medium text-foreground">{guest.name}</span>
+                      <FactionBadge faction={guest.faction as Faction} />
+                    </div>
+                  ))}
+                  
+                  {getGuestsForFaction(dialogFaction).length === 0 && (
+                    <div className="text-center py-8 text-muted-foreground">
+                      No guests assigned to this table yet.
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

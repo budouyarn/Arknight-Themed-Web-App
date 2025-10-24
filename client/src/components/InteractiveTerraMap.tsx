@@ -251,23 +251,6 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
           </div>
         </div>
       </div>
-
-      {selectedFaction && (
-        <div className="mt-6 p-4 bg-card/50 backdrop-blur-sm border-2 border-primary/40 rounded-md" style={{
-          clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%)"
-        }}>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <MapPin className="w-5 h-5 text-primary" />
-              <div>
-                <p className="text-sm text-muted-foreground font-display">Selected Region</p>
-                <p className="font-brand font-bold text-lg text-foreground">{selectedFaction}</p>
-              </div>
-            </div>
-            <FactionBadge faction={selectedFaction} />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

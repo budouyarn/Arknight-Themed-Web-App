@@ -154,13 +154,15 @@ Preferred communication style: Simple, everyday language.
 - Table reference validation ensures referential integrity
 - All mutations include error handlers with user-facing toast notifications
 
-### Search Autocomplete Feature
+### Interactive Features
 - Added autocomplete dropdown to search bar showing up to 8 guest name suggestions
 - Each suggestion displays guest name, faction badge, and assigned table
 - Keyboard navigation support (Arrow keys, Enter to select, Escape to close)
 - Click-to-select functionality for suggestions
 - Click outside dropdown to close
-- Removed search results section below map to simplify UI - guests now find their table only through autocomplete suggestions
+- Faction region click opens modal dialog showing all guests seated at that table
+- Modal displays faction badge, table name, guest count, and complete guest list
+- Removed static search results and selected region info boxes for cleaner interface
 
 ### UI/UX Improvements
 - Loading states for all data fetching operations
