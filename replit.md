@@ -148,6 +148,13 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes (October 24, 2025)
 
+### Welcome Page Implementation
+- Converted header into full-screen welcome page
+- Added "Enter" button on bottom right to access main seating interface
+- Welcome page displays couple's names, wedding date, and welcome message
+- Search bar and "Find Your Table" heading now only appear on Interactive Map tab
+- Removed Grid Layout view, keeping only Interactive Map and Guest List tabs
+
 ### Owner-Only Authentication Implementation
 - Created secure authentication system using Passport.js with local strategy
 - Implemented first-time setup page (/setup) for owner account creation

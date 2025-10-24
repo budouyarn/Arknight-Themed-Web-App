@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import Header from "@/components/Header";
+import WelcomePage from "@/components/WelcomePage";
 import SearchBar from "@/components/SearchBar";
 import InteractiveTerraMap from "@/components/InteractiveTerraMap";
 import CircularTable from "@/components/CircularTable";
@@ -12,6 +12,7 @@ import { Map, List } from "lucide-react";
 import type { Faction, Guest, Table } from "@shared/schema";
 
 export default function Home() {
+  const [hasEntered, setHasEntered] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [highlightedTableId, setHighlightedTableId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -77,9 +78,12 @@ export default function Home() {
     );
   }
 
+  if (!hasEntered) {
+    return <WelcomePage onEnter={() => setHasEntered(true)} />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="map" className="space-y-6" data-testid="view-tabs">
