@@ -191,8 +191,11 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                           <div
                             className={`
                               relative overflow-hidden rounded-md border-2 transition-all duration-300
-                              bg-gradient-to-br ${factionColors[faction]} backdrop-blur-md
-                              ${isSelected ? 'ring-4 ring-primary scale-110 shadow-2xl' : 'scale-100 hover:scale-105'}
+                              bg-gradient-to-br backdrop-blur-md
+                              ${isSelected 
+                                ? 'from-red-800 to-red-900 border-red-600 ring-4 ring-red-500 scale-110 shadow-2xl' 
+                                : `${factionColors[faction]} scale-100 hover:scale-105`
+                              }
                               active-elevate-2
                             `}
                             style={{
@@ -224,7 +227,7 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                             </div>
 
                             {isSelected && (
-                              <div className="absolute inset-0 border-2 border-primary rounded-md animate-pulse pointer-events-none" />
+                              <div className="absolute inset-0 border-2 border-red-400 rounded-md animate-pulse pointer-events-none" />
                             )}
                           </div>
                         </button>
