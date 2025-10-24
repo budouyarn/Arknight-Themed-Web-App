@@ -28,29 +28,29 @@ const factionIcons: Record<Faction, typeof Shield> = {
 };
 
 const factionColors: Record<Faction, string> = {
-  "Rhodes Island": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Lungmen": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Ursus": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Victoria": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Kazimierz": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Laterano": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Siesta": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Bolivar": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Sargon": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
-  "Yan": "from-blue-500/20 to-blue-600/30 border-blue-400/40 hover:from-blue-500/30 hover:to-blue-600/40",
+  "Rhodes Island": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Lungmen": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Ursus": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Victoria": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Kazimierz": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Laterano": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Siesta": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Bolivar": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Sargon": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
+  "Yan": "from-slate-500/20 to-slate-600/30 border-slate-400/40 hover:from-slate-500/30 hover:to-slate-600/40",
 };
 
 const radarColors: Record<Faction, string> = {
-  "Rhodes Island": "rgba(59, 130, 246, 0.3)",
-  "Lungmen": "rgba(59, 130, 246, 0.3)",
-  "Ursus": "rgba(59, 130, 246, 0.3)",
-  "Victoria": "rgba(59, 130, 246, 0.3)",
-  "Kazimierz": "rgba(59, 130, 246, 0.3)",
-  "Laterano": "rgba(59, 130, 246, 0.3)",
-  "Siesta": "rgba(59, 130, 246, 0.3)",
-  "Bolivar": "rgba(59, 130, 246, 0.3)",
-  "Sargon": "rgba(59, 130, 246, 0.3)",
-  "Yan": "rgba(59, 130, 246, 0.3)",
+  "Rhodes Island": "rgba(100, 116, 139, 0.3)",
+  "Lungmen": "rgba(100, 116, 139, 0.3)",
+  "Ursus": "rgba(100, 116, 139, 0.3)",
+  "Victoria": "rgba(100, 116, 139, 0.3)",
+  "Kazimierz": "rgba(100, 116, 139, 0.3)",
+  "Laterano": "rgba(100, 116, 139, 0.3)",
+  "Siesta": "rgba(100, 116, 139, 0.3)",
+  "Bolivar": "rgba(100, 116, 139, 0.3)",
+  "Sargon": "rgba(100, 116, 139, 0.3)",
+  "Yan": "rgba(100, 116, 139, 0.3)",
 };
 
 type FactionPosition = {
