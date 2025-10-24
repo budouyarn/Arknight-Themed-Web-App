@@ -83,9 +83,9 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Nunito", "system-ui", "sans-serif"],
-        display: ["Nunito", "sans-serif"],
-        brand: ["Nunito", "sans-serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        display: ["Rajdhani", "sans-serif"],
+        brand: ["Orbitron", "sans-serif"],
         serif: ["var(--font-serif)"],
         mono: ["var(--font-mono)"],
       },
