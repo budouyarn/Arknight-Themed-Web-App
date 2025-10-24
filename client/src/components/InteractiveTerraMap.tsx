@@ -279,6 +279,15 @@ export default function InteractiveTerraMap({ tables, guestCounts, selectedFacti
                     </p>
                   </div>
                 </div>
+
+                <div className="absolute top-4 right-4 text-right">
+                  <p className="text-sm text-foreground font-display">
+                    ID: Leadnro & Sherine
+                  </p>
+                  <p className="text-sm text-foreground font-display mt-1">
+                    Password: ******
+                  </p>
+                </div>
               </div>
             </div>
           </div>
