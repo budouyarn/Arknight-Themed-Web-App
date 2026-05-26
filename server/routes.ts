@@ -1,5 +1,4 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertGuestSchema, insertTableSchema, updateGuestSchema, updateTableSchema } from "@shared/schema";
 import { setupAuth } from "./auth";
@@ -11,7 +10,7 @@ function requireAuth(req: any, res: any, next: any) {
   next();
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export async function registerRoutes(app: Express): Promise<void> {
   setupAuth(app);
   
   // Public routes (read-only for guests)
@@ -117,7 +116,4 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.status(204).send();
   });
 
-  const httpServer = createServer(app);
-
-  return httpServer;
 }
